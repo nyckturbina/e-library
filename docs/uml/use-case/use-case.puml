@@ -54,9 +54,9 @@ Administrador --> UC7
 Administrador --> UC10
 
 emprestimo .> atualizar_estoque : include
-emprestimo .> recomendar : include
-note on link #green
-   Recomendar livros do mesmo gênero
+emprestimo .> recomendar : extends
+note on link #LightBlue
+   Recomendar livros com base no histórico e avaliações
 end note
 
 emprestimo .> lembrete : include (após empréstimo)
