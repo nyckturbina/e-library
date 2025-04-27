@@ -16,7 +16,6 @@ package "Biblioteca Virtual" {
     usecase "RF003 - Registrar Empréstimo" as emprestimo
     usecase "RF004 - Atualizar estoque" as atualizar_estoque
     usecase "RF005 - Gerar Multa" as UC5
-    ' usecase "RF005.1 - Enviar lembrete de devolução" as UC5_1
     usecase "RF006 - Autenticação no Sistema" as UC6
     usecase "RF007 - Gerar Relatórios" as UC7
     usecase "RF008 - Recomendar Livros" as recomendar
@@ -26,6 +25,7 @@ package "Biblioteca Virtual" {
     usecase "RF011 - Devolver Livro" as devolver
     usecase "RF012 - Definir Prazo" as UC12
     usecase "RF013 - Consultar Estoque" as UC13
+    usecase "RF014 - Avaliar Livro" as UC14
 
     note right of UC2
         Busca por:
@@ -41,6 +41,12 @@ package "Biblioteca Virtual" {
         - Alertas de multas
         - Confirmações de empréstimo/devolução
     end note
+
+    note top of UC14
+        Avaliação simplificada:
+        - Like/Deslike
+        - Disponível após devolução
+    end note
 }
 
 Usuario --> UC2
@@ -48,6 +54,7 @@ Usuario --> UC2_1
 Usuario --> emprestimo
 Usuario --> UC6
 Usuario --> devolver
+Usuario --> UC14
 
 Administrador --> UC1
 Administrador --> UC7
@@ -56,7 +63,7 @@ Administrador --> UC10
 emprestimo .> atualizar_estoque : include
 emprestimo .> recomendar : extends
 note on link #LightBlue
-   Recomendar livros com base no histórico e avaliações
+    Recomendar livros com base no histórico e avaliações
 end note
 
 emprestimo .> lembrete : include (após empréstimo)
@@ -64,6 +71,7 @@ emprestimo .> UC12 : include
 emprestimo .> UC13 : include
 UC5 .> notificacao_multa : include (multa aplicada)
 devolver .> atualizar_estoque : include
+devolver ..> UC14 : extends
 
 devolver <.. UC5 : extends
 note on link #red: Em caso de atraso
@@ -71,5 +79,4 @@ note on link #red: Em caso de atraso
 note right of Administrador
     Herda todas as operações de Usuário
 end note
-
 @enduml
