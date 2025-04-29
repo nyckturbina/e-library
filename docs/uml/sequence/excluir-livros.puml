@@ -1,0 +1,57 @@
+@startuml "Excluir livro"
+actor "Administrador" as adm
+boundary "Interface" as Ui #LightGreen
+control "LivroController" as controller_service #LightYellow
+database "Repository" as db #LightGray
+
+adm -> Ui: Solicita exclusão
+activate Ui
+
+' activate Ui
+Ui -> Ui: Confirmação modal ("Deseja excluir?")
+
+alt Usuário cancela
+    Ui --> adm: Fecha modal
+    ' deactivate Ui
+else Usuário confirma
+    Ui -> controller_service: Delete: Envia ID
+    ' activate Ui
+    activate controller_service
+
+    controller_service -> db: Busca livro por ID
+    ' activate controller_service
+    activate db
+
+    alt Livro não existe
+        db --> controller_service: Erro
+        deactivate db
+        controller_service --> Ui: 404 "Livro não encontrado"
+
+        ' deactivate controller_service
+        Ui --> adm: Exibe erro
+
+    else Livro existe
+        db --> controller_service: Dados do livro
+        ' deactivate controller_service
+        deactivate db
+        controller_service -> db: Soft delete (marca como excluído)
+        activate db
+        db --> controller_service: Confirmação
+        deactivate db
+        ' deactivate controller_service
+
+        controller_service --> Ui: 200 OK
+        deactivate controller_service
+
+        Ui -> Ui: Remove item da lista local
+        ' activate Ui
+
+        Ui --> adm: "Livro excluído com sucesso!"
+        deactivate Ui
+        ' deactivate Ui
+    end
+end
+
+' deactivate Ui
+' deactivate Ui
+@enduml

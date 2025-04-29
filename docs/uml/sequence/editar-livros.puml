@@ -1,0 +1,40 @@
+@startuml "Editar livros (versão simplificada)"
+actor "Administrador" as adm
+boundary "User Interface" as Ui #LightGreen
+control "LivroController" as controller_service #LightYellow
+database "Repository" as db #LightGray
+
+adm -> Ui: Seleciona livro (dados já carregados)
+
+activate Ui
+Ui -> Ui: Carrega dados locais
+
+Ui --> adm: Exibe formulário
+
+adm -> Ui: Altera dados na tela de edição
+Ui -> Ui: Valida campos e compara com originais
+
+alt Dados inválidos ou idênticos
+    Ui --> adm: Exibe erro correspondente
+else Dados válidos e modificados
+    Ui -> controller_service: Put: LivroDTO
+    activate controller_service
+
+    controller_service -> db: Verifica/Atualiza por ID
+    alt Livro não existe
+        db --> controller_service: Erro
+        controller_service --> Ui: "Livro não existe"
+    else Sucesso
+        db --> controller_service: Confirmação
+        controller_service --> Ui: 200 OK
+
+        Ui -> Ui: Atualiza lista local
+        
+        Ui --> adm: "Livro atualizado!"
+        deactivate Ui
+        
+    end
+
+    deactivate controller_service
+end
+@enduml

@@ -1,0 +1,26 @@
+@startuml "Buscar Livros"
+
+boundary "Interface" as Ui #LightGreen
+control "LivroController" as controller #LightYellow
+database "Repository" as db #LightGray
+
+Ui -> controller: Solicita livros
+activate Ui
+activate controller
+
+controller -> db: Busca livros
+activate db
+
+db --> controller: Retorna lista de livros
+deactivate db
+
+opt lista vazia
+    controller --> Ui: Exibe mensagem "Não há livros disponíveis"
+end
+
+controller --> Ui: Exibe livros disponíveis
+
+deactivate controller
+deactivate Ui
+
+@enduml

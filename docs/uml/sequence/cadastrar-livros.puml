@@ -1,0 +1,48 @@
+@startuml "Cadastrar livros"
+actor "Administrador" as adm
+boundary "Interface de Cadastro" as UiCad
+control "LivroController" as controller
+participant "LivroService" as service
+database "Repository" as db
+
+adm -> UiCad: Preenche dados do livro
+activate UiCad
+
+UiCad -> UiCad: Validar campos (obrigatórios, formatos)
+alt Dados inválidos
+    UiCad --> adm: Exibe erro "dados inválidos"
+    deactivate UiCad
+else Dados válidos
+    UiCad -> controller: Post: Submete formulário (LivroDTO)
+    activate controller
+
+    controller -> service: salvarLivro(dados)
+    activate service
+
+    service -> db: Verificar se livro existe (por título)
+    activate db
+
+    alt Livro já existe
+        db --> service: Livro encontrado
+        deactivate db
+        service --> controller: Erro: "Livro já cadastrado"
+        deactivate service
+        controller --> UiCad: Exibe mensagem de erro
+        deactivate controller
+        UiCad --> adm: Mostra erro
+    else Livro não existe
+        db --> service: Nenhum livro encontrado
+        deactivate db
+        service -> db: Persistir novo livro
+        activate db
+        db --> service: Livro cadastrado (ID gerado)
+        deactivate db
+        service --> controller: LivroDTO (convertido)
+        deactivate service
+        controller --> UiCad: Resposta a requisição (201)
+        deactivate controller
+        UiCad --> adm: "Livro cadastrado!"
+    end
+
+    deactivate UiCad
+    @enduml
