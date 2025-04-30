@@ -3,7 +3,7 @@
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
 !include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
 
-Container(api, "API Backend", "Spring boot", "Armazena lógica do programa e gerencia interações com o banco de dados") {
+Container_Boundary(api, "API Backend", "Spring boot", "Armazena lógica do programa e gerencia interações com o banco de dados") {
     Component(control, "Rest Controller", "Controller Spring MVC", "Recebe requisições HTTP")
     Component(service, "Service", "Classes de Serviço", "Contém lógica de negócio (validações, conversão DTO/Entidade, etc)")
     Component(repository, "Repository", "Interface JPA", "Gerencia operações de banco de dados")
