@@ -1,0 +1,18 @@
+@startuml Diagrama de Contexto
+
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+Person_Ext(client, "Cliente", "Cliente que irá interagir com o sistema, solicitando empréstimo e acompanhando informações (prazos, multas...).")
+Person(adm, "Administrador", "Funcionário da biblioteca que irá gerenciar livros e cliente.")
+
+Container(web, "Aplicação web", "React + Next JS", "Exibir informações na interface de usuário para interação com o sistema.")
+Container(api, "API Backend", "Spring boot", "Armazena lógica do programa e gerencia interações com o banco de dados")
+ContainerDb(db, "Database", "H2DB", "Armazena dados para consulta, persistindo as informações em disco.")
+
+Rel(client, web, "Usa")
+Rel(adm, web, "Usa")
+
+Rel(web, api, "Consome", "Requisições HTTP")
+Rel(api, db, "Consulta", "Hibernate")
+
+@enduml
