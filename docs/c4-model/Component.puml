@@ -5,11 +5,17 @@
 
 Container(api, "API Backend", "Spring boot", "Armazena lógica do programa e gerencia interações com o banco de dados") {
     Component(control, "Rest Controller", "Controller Spring MVC", "Recebe requisições HTTP")
-    Component(service, "Service", "Classes de Serviço", "Contém lógica de negócio (validações para persistência, converter DTOs, etc)")
+    Component(service, "Service", "Classes de Serviço", "Contém lógica de negócio (validações, conversão DTO/Entidade, etc)")
     Component(repository, "Repository", "Interface JPA", "Gerencia operações de banco de dados")
+    
+    Component(dto, "DTO", "Data Transfer Object", "Estrutura de dados para transferência (ex: LivroDTO)")
+    Component(model, "Model", "Entidade JPA", "Representação do domínio (ex: Livro)")
 }
 
+Rel(control, dto, "Usa")
 Rel(control, service, "Chama métodos")
+Rel(service, model, "Converte/Manipula")
 Rel(service, repository, "Consulta DB")
+Rel(repository, model, "Persiste/Recupera")
 
 @enduml
