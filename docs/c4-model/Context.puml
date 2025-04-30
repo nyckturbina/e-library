@@ -1,0 +1,13 @@
+@startuml Contexto - Sistema Biblioteca
+
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+
+Person(user, "Usuário", "Usuário resposável por interagir com as funções do sistema. Podendo ser Administrador, ou Cliente.")
+
+System_Boundary(sys, "Sistema Biblioteca"){
+    System(web, "Sistema biblioteca", "Sistema que gerencia catálogo e empréstimos de livros.")
+}
+
+Rel(user, web, "Acessa")
+
+@enduml
