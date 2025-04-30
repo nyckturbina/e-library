@@ -1,0 +1,10 @@
+package "Controller" <<Controller>> {
+    class LivroController {
+        - livroService: LivroService
+
+        + cadastrar(livro: Livro): Livro
+        + buscarTodosLivros(): List<Livro>
+        + editar(livro: Livro): Livro
+        + deletar(livro: Livro): void
+    }
+}

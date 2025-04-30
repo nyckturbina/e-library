@@ -1,0 +1,50 @@
+@startuml "Class Diagram"
+
+!include packages/model.puml
+!include packages/controller.puml
+
+skinparam package {
+    BackgroundColor<<Model>> LightBlue
+    BackgroundColor<<View>> LightGreen
+    BackgroundColor<<Controller>> LightYellow
+    BackgroundColor<<Service>> LightSalmon
+    BackgroundColor<<Repository>> LightGray
+}
+
+interface JpaRepository<T, ID> <<Spring Data JPA>> {
+    + save(entity: T): T
+    + findAll(): Optional<T>
+    + findById(id: ID): Optional<T>
+    + delete(entity: T): void
+}
+
+package "View" <<View>> {
+    class TesteView {
+
+    }
+}
+
+package "Service" <<Service>> {
+    class LivroService {
+        - livroRepository: LivroRepository <<Autowired>>
+
+        + cadastrar(livro: Livro): Livro
+        + buscarTodos(): List<Livro>
+        ' + buscar(id: Long): Livro
+        + editar(livro: Livro): Livro
+        + deletar(livro: Livro): void
+    }
+}
+
+package "Repository" <<Repository>> {
+    interface LivroRepository {}
+}
+
+LivroController ..> Livro
+LivroController ..> LivroService
+LivroService ..> Livro
+LivroService ..> LivroRepository
+
+JpaRepository "Livro, Long" <|-- LivroRepository
+
+@enduml

@@ -1,0 +1,58 @@
+package "Model" <<Model>> {
+    abstract class BaseEntity <<SoftDelete>> {
+        # id : Long
+        # ativo: boolean
+        + getId(): Long
+        + isAtivo(): boolean
+        + setAtivo(ativo: boolean): void
+    }
+
+    abstract class Usuario {
+        # nome: String
+        # login: String
+        # senha: String
+        + {abstract} solicitarEmprestimo()
+        + devolverLivro(livro: Livro)
+        + getNome() : String
+    }
+
+    entity Cliente {
+        - <<override>> emprestimosAtivos: List<Emprestimo>
+        + solicitarEmprestimo(idLivro: int)
+    }
+
+    entity Administrador {
+        + <<override>> solicitarEmprestimo(idCliente: int, idLivro: int)
+        + gerarRelatorioEmprestimo(emprestimo: Emprestimo)
+    }
+
+    entity Livro {
+        - titulo: String
+        - autor: String
+        - genero: String
+        - ISBN: String
+        - sinopse: String
+        - imagem: URL
+        - quantidadeTotal: Integer
+    }
+
+    entity Emprestimo {
+        - autorEmprestimo: Cliente
+        - livroEmprestado: Livro
+        - dataEmprestimo: LocalDateTime
+    }
+
+    BaseEntity <|-- Usuario
+    BaseEntity <|-- Livro
+    BaseEntity <|-- Emprestimo
+
+    Usuario <|-- Administrador
+    Usuario <|-- Cliente
+    Usuario ..> Livro
+
+    Cliente ..> Emprestimo
+    Administrador ..> Emprestimo
+
+    Emprestimo ..> Usuario
+    Emprestimo ..> Livro
+}
