@@ -1,4 +1,4 @@
-package com.unp.biblioteca.virtual;
+package com.unp.bibliotecavirtual;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
