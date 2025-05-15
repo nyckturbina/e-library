@@ -1,7 +1,9 @@
 package com.unp.bibliotecavirtual.service.strategy;
 
 import com.unp.bibliotecavirtual.model.Livro;
+import org.springframework.stereotype.Component;
 
+@Component
 public class QuantidadeValidationStrategy implements ValidationStrategy {
     @Override
     public void validar(Livro livro) {

@@ -10,6 +10,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.List;
@@ -19,12 +20,15 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+@SpringBootTest
 @ExtendWith(MockitoExtension.class)
 class LivroServiceTest {
 
     @Mock
     private LivroRepository livroRepository;
 
+    @Autowired
+    private List<ValidationStrategy> validacoes;
 
     @InjectMocks
     private LivroService livroService;
@@ -32,8 +36,6 @@ class LivroServiceTest {
     private Livro livroValido;
     private Livro livroAtualizado;
 
-    @Autowired
-    private List<ValidationStrategy> validacoes;
 
     @BeforeEach
     void setUp() {
