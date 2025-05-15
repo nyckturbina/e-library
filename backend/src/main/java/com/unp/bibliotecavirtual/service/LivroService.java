@@ -19,10 +19,21 @@ public class LivroService {
     private LivroRepository livroRepository;
 
     public Livro cadastrar(Livro livro) {
-        // Validar se não é nulo
-        // Validar se já existe no estoque
+        if (livro == null) {
+            throw new NullPointerException("Livro não pode ser nulo");
+        }
 
-        validarCadastro(livro);
+        if (livro.getTitulo() == null || livro.getTitulo().isBlank()) {
+            throw new IllegalArgumentException("O título é obrigatório.");
+        }
+
+        if (livro.getAutor() == null || livro.getAutor().isBlank()) {
+            throw new IllegalArgumentException("O autor é obrigatório.");
+        }
+
+        if (livro.getQuantidadeTotal() == null || livro.getQuantidadeTotal() < 0) {
+            throw new IllegalArgumentException("A quantidade não pode ser negativa.");
+        }
 
         return livroRepository.save(livro);
     }
