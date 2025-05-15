@@ -4,7 +4,7 @@
 [![Status](https://img.shields.io/badge/STATUS-EM%20ANDAMENTO-orange)](https://github.com/cmoiss/biblioteca)
 [![Licença](https://img.shields.io/badge/LICENÇA-MIT-blue)](https://opensource.org/licenses/MIT)
 
-# Sistema de Biblioteca  
+# E-Library  
 
 **Projeto avaliativo de um sistema de biblioteca**  
 
