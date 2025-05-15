@@ -1,8 +1,9 @@
 package com.unp.biblioteca.virtual.service;
 
-import com.unp.biblioteca.Repositorio.LivroRepository;
-import com.unp.biblioteca.virtual.Modelo.Livro;
-import com.unp.biblioteca.virtual.validation.LivroValidator;
+import com.unp.biblioteca.virtual.Validation.LivroValidator;
+import com.unp.bibliotecavirtual.model.Livro;
+import com.unp.bibliotecavirtual.repository.LivroRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

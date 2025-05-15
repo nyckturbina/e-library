@@ -1,8 +1,9 @@
 package com.unp.biblioteca.virtual.Validation.Impl;
 
-import com.unp.biblioteca.virtual.Modelo.Livro;
-import com.unp.biblioteca.virtual.validation.LivroValidator;
 import org.springframework.stereotype.Component;
+
+import com.unp.biblioteca.virtual.Validation.LivroValidator;
+import com.unp.bibliotecavirtual.model.Livro;
 
 @Component
 public class LivroValidatorImpl implements LivroValidator {

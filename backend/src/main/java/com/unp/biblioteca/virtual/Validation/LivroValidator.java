@@ -1,6 +1,6 @@
 package com.unp.biblioteca.virtual.Validation;
 
-import com.unp.biblioteca.virtual.Modelo.Livro;
+import com.unp.bibliotecavirtual.model.Livro;
 
 public interface LivroValidator {
     void validarCadastro(Livro livro);
