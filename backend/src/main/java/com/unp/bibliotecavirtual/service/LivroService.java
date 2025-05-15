@@ -5,6 +5,10 @@ import com.unp.bibliotecavirtual.repository.LivroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import static com.unp.bibliotecavirtual.service.LivroValidator.validarBuscaPorId;
+import static com.unp.bibliotecavirtual.service.LivroValidator.validarCadastro;
+import static com.unp.bibliotecavirtual.service.LivroValidator.validarIdNulo;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -16,13 +20,17 @@ public class LivroService {
 
     public Livro cadastrar(Livro livro) {
         // Validar se não é nulo
-        if (livro == null) {
-            throw new NullPointerException("Livro não pode ser nulo");
-        }
-
         // Validar se já existe no estoque
 
+        validarCadastro(livro);
+
         return livroRepository.save(livro);
+    }
+
+    public Livro buscarPorId(Long id) {
+        validarBuscaPorId(id);
+        return livroRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Livro não encontrado com ID: " + id));
     }
 
     // READ (listar todos)
@@ -32,6 +40,7 @@ public class LivroService {
 
     public Livro editar(Livro livro) {
         // Verificar se todos os campos obrigatórios estão sendo preenchidos
+        validarIdNulo(livro);
 
         Optional<Livro> existente = livroRepository.findById(livro.getId());
         if (existente.isPresent()) {
@@ -43,6 +52,7 @@ public class LivroService {
 
     public void deletar(Livro livro) {
         // Deve executar SoftDelete
+        validarIdNulo(livro);
 
         Optional<Livro> existente = livroRepository.findById(livro.getId());
         if (existente.isPresent()) {
