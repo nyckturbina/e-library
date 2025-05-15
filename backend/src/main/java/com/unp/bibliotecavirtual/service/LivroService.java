@@ -2,6 +2,7 @@ package com.unp.bibliotecavirtual.service;
 
 import com.unp.bibliotecavirtual.model.Livro;
 import com.unp.bibliotecavirtual.repository.LivroRepository;
+import com.unp.bibliotecavirtual.service.strategy.ValidationStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,22 +19,11 @@ public class LivroService {
     @Autowired
     private LivroRepository livroRepository;
 
+    @Autowired
+    private List<ValidationStrategy> validacoes;
+    
     public Livro cadastrar(Livro livro) {
-        if (livro == null) {
-            throw new NullPointerException("Livro não pode ser nulo");
-        }
-
-        if (livro.getTitulo() == null || livro.getTitulo().isBlank()) {
-            throw new IllegalArgumentException("O título é obrigatório.");
-        }
-
-        if (livro.getAutor() == null || livro.getAutor().isBlank()) {
-            throw new IllegalArgumentException("O autor é obrigatório.");
-        }
-
-        if (livro.getQuantidadeTotal() == null || livro.getQuantidadeTotal() < 0) {
-            throw new IllegalArgumentException("A quantidade não pode ser negativa.");
-        }
+        validacoes.forEach(validacao -> validacao.validar(livro));
 
         return livroRepository.save(livro);
     }
