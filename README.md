@@ -8,6 +8,9 @@
 
 **Projeto avaliativo de um sistema de biblioteca**  
 
+## Padrões de Projeto utilizados
+- Strategy
+
 ---
 
 ## Créditos  
