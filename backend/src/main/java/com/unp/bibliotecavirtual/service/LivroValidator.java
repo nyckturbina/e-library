@@ -16,8 +16,8 @@ public class LivroValidator {
             throw new IllegalArgumentException("O autor é obrigatório.");
         }
 
-        if (livro.getQuantidadeTotal() == null || livro.getQuantidadeTotal() <= 0) {
-            throw new IllegalArgumentException("A quantidade deve ser maior que 0.");
+        if (livro.getQuantidadeTotal() == null || livro.getQuantidadeTotal() < 0) {
+            throw new IllegalArgumentException("A quantidade não pode ser negativa.");
         }
     }
 

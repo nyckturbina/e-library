@@ -31,10 +31,22 @@ class LivroServiceTest {
 
     @BeforeEach
     void setUp() {
-        livroValido = new Livro("Domain-Driven Design", "Eric Evans", "Tecnologia" ,"978-8550800653");
+        livroValido = new Livro(
+                "Domain-Driven Design",
+                "Eric Evans",
+                "Tecnologia",
+                "978-8550800653",
+                "Um livro sobre arquitetura de software",
+                10);
+
         ReflectionTestUtils.setField(livroValido, "id", 1L);
 
-        livroAtualizado = new Livro("Domain-Driven Design - Edição Especial", "Eric Evans", "Tecnologia", "978-8550800653");
+        livroAtualizado = new Livro(
+                "Domain-Driven Design - Edição Especial",
+                livroValido.getAutor(),
+                livroValido.getGenero(),
+                livroValido.getIsbn()
+        );
         ReflectionTestUtils.setField(livroAtualizado, "id", 1L);
     }
 
