@@ -2,6 +2,7 @@ package com.unp.bibliotecavirtual.service;
 
 import com.unp.bibliotecavirtual.model.Livro;
 import com.unp.bibliotecavirtual.repository.LivroRepository;
+import com.unp.bibliotecavirtual.service.strategy.ValidationStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,11 +19,11 @@ public class LivroService {
     @Autowired
     private LivroRepository livroRepository;
 
+    @Autowired
+    private List<ValidationStrategy> validacoes;
+    
     public Livro cadastrar(Livro livro) {
-        // Validar se não é nulo
-        // Validar se já existe no estoque
-
-        validarCadastro(livro);
+        validacoes.forEach(validacao -> validacao.validar(livro));
 
         return livroRepository.save(livro);
     }
