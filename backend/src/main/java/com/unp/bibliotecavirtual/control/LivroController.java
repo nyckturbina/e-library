@@ -5,6 +5,7 @@ import com.unp.bibliotecavirtual.dto.request.LivroRequestDTO;
 import com.unp.bibliotecavirtual.dto.response.LivroResponseDTO;
 import com.unp.bibliotecavirtual.model.Livro;
 import com.unp.bibliotecavirtual.service.LivroService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,7 +23,7 @@ public class LivroController {
     LivroService service;
 
     @PostMapping
-    public ResponseEntity<LivroResponseDTO> cadastrarLivros(@RequestBody LivroRequestDTO request) {
+    public ResponseEntity<LivroResponseDTO> cadastrarLivros(@RequestBody @Valid LivroRequestDTO request) {
         Livro livro = toEntity(request);
 
         service.cadastrar(livro);

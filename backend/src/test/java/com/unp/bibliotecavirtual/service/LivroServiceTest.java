@@ -2,15 +2,12 @@ package com.unp.bibliotecavirtual.service;
 
 import com.unp.bibliotecavirtual.model.Livro;
 import com.unp.bibliotecavirtual.repository.LivroRepository;
-import com.unp.bibliotecavirtual.service.strategy.ValidationStrategy;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.List;
@@ -20,15 +17,11 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
 @ExtendWith(MockitoExtension.class)
 class LivroServiceTest {
 
     @Mock
     private LivroRepository livroRepository;
-
-    @Autowired
-    private List<ValidationStrategy> validacoes;
 
     @InjectMocks
     private LivroService livroService;
@@ -68,25 +61,6 @@ class LivroServiceTest {
         assertEquals(livroValido.getTitulo(), resultado.getTitulo());
 
         verify(livroRepository, times(1)).save(livroValido);
-    }
-
-    @Test
-    void cadastrar_deveLancarExcecaoQuandoLivroNulo() {
-        assertThrows(NullPointerException.class,
-                () -> livroService.cadastrar(null),
-                "Deveria lançar NullPointerException quando livro é nulo");
-    }
-
-    @Test
-    void cadastrar_deveLancarExcecaoQuandoTituloNulo() {
-        assertThrows(NullPointerException.class,
-                () -> livroService.cadastrar(new Livro(
-                        null,
-                        livroValido.getAutor(),
-                        livroValido.getGenero(),
-                        livroValido.getIsbn()
-                )),
-                "Deveria lançar NullPointerException quando título é nulo");
     }
 
     @Test
