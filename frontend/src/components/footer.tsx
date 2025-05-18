@@ -10,6 +10,7 @@ export default function Footer() {
             <a
               href="https://www.flaticon.com/free-icons/book"
               title="book icons"
+              target="_blank"
             >
               Book icons created by Freepik - Flaticon
             </a>

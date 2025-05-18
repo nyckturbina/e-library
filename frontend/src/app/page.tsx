@@ -4,7 +4,7 @@ import MainContent from "@/components/main-content";
 
 export default function Home() {
   return (
-    <div>
+    <div className="flex flex-col gap-3">
       <Header />
 
       <MainContent />

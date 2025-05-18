@@ -1,6 +1,5 @@
-import React from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import BookCard from "@/components/book-card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Pagination,
   PaginationContent,
@@ -10,73 +9,19 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { Book } from "@/models/book";
+import { books } from "@/models/books-provider";
+import CreateLivroModal from "./home/create-livro/create-livro";
 
 export default function MainContent() {
-  const books: Book[] = [
-    {
-      id: 1,
-      capa: "url-da-capa.jpg",
-      titulo: "O Hobbit",
-      autor: "J.R.R. Tolkien",
-      avaliacao: 4.5,
-    },
-    {
-      id: 2,
-      capa: "url-da-capa-2.jpg",
-      titulo: "Dom Quixote",
-      autor: "Miguel de Cervantes",
-    },
-    {
-      id: 3,
-      capa: "https://exemplo.com/capa-1984.jpg",
-      titulo: "1984",
-      autor: "George Orwell",
-    },
-    {
-      id: 4,
-      capa: "https://exemplo.com/capa-harry-potter.jpg",
-      titulo: "Harry Potter e a Pedra Filosofal",
-      autor: "J.K. Rowling",
-      avaliacao: 4.9,
-    },
-    {
-      id: 5,
-      capa: "https://exemplo.com/capa-lolita.jpg",
-      titulo: "Lolita",
-      autor: "Vladimir Nabokov",
-      avaliacao: 2.3,
-    },
-    {
-      id: 6,
-      capa: "https://exemplo.com/capa-dom-casmurro.jpg",
-      titulo: "Dom Casmurro",
-      autor: "Machado de Assis",
-      avaliacao: 5,
-    },
-    {
-      id: 7,
-      capa: "url-invalida.jpg",
-      titulo: "O Pequeno Príncipe",
-      autor: "Antoine de Saint-Exupéry",
-      avaliacao: 4.7,
-    },
-    {
-      id: 8,
-      capa: "https://exemplo.com/capa-arte-guerra.jpg",
-      titulo: "A Arte da Guerra: Os Treze Capítulos Originais",
-      autor: "Sun Tzu (Tradução: João da Silva)",
-      avaliacao: 3.8,
-    },
-  ];
-
   return (
-    <div className="bg-white-smoke">
+    <div className="flex flex-col items-center gap-5">
       <aside></aside>
       <main>
         <Card>
           <CardHeader>
-            <CardTitle>Todos os livros</CardTitle>
+            <CardTitle className="text-charcoal-blue">
+              Todos os livros
+            </CardTitle>
           </CardHeader>
           <CardContent className="flex justify-center flex-wrap gap-3">
             {books.map((book) => (
@@ -116,6 +61,8 @@ export default function MainContent() {
           </Pagination>
         </Card>
       </main>
+
+      <CreateLivroModal />
     </div>
   );
 }
