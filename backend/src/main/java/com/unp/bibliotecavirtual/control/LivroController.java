@@ -8,13 +8,14 @@ import com.unp.bibliotecavirtual.service.LivroService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static com.unp.bibliotecavirtual.dto.mapper.LivroMapperDTO.*;
 import static com.unp.bibliotecavirtual.dto.mapper.LivroMapperDTO.toEntity;
-import static org.springframework.http.HttpStatus.CREATED;
+import static org.springframework.http.HttpStatus.*;
 
 @RestController
 @RequestMapping("/livros")
@@ -25,13 +26,43 @@ public class LivroController {
     @PostMapping
     public ResponseEntity<LivroResponseDTO> cadastrarLivros(@RequestBody @Valid LivroRequestDTO request) {
         Livro livro = toEntity(request);
-
         service.cadastrar(livro);
+        LivroResponseDTO livroRespose = toResponse(livro);
+        return ResponseEntity.status(CREATED).body(livroRespose);
+    }
 
-        LivroResponseDTO livroRespose = LivroMapperDTO.toResponse(livro);
+    @GetMapping("/{id}")
+    public ResponseEntity<LivroResponseDTO> buscarPorId(@PathVariable Long id) {
+        Livro livro = service.buscarPorId(id);
+        LivroResponseDTO response = toResponse(livro);
+        return ResponseEntity.status(FOUND).body(response);
+    }
 
-        return ResponseEntity
-                .status(CREATED)
-                .body(livroRespose);
+    @GetMapping
+    public ResponseEntity<List<LivroResponseDTO>> buscarTodos() {
+        List<Livro> livros = service.buscarTodos();
+        List<LivroResponseDTO> response = livros.stream()
+                .map(LivroMapperDTO::toResponse)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(response);
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<LivroResponseDTO> editar(
+            @PathVariable Long id, @RequestBody @Valid LivroRequestDTO request
+    ) {
+        Livro livroAtualizado = toEntity(request);
+
+        Livro novoLivro = service.editar(id, livroAtualizado);
+        LivroResponseDTO response = toResponse(novoLivro);
+
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletar(@PathVariable Long id) {
+        Livro livro = service.buscarPorId(id); // Verifica se existe
+        service.deletar(livro);
+        return ResponseEntity.noContent().build();
     }
 }

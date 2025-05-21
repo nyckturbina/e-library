@@ -17,7 +17,8 @@ public record LivroRequestDTO(
         String genero,
 
         @NotBlank(message = "O ISBN é obrigatório")
-        @ISBN(message = "ISBN inválido (formato aceito: ISBN-10 ou ISBN-13)")
+        @Size(min = 10, max = 13, message = "O ISBN deve ter entre 10 e 13 caracteres")
+//        @ISBN(message = "ISBN inválido (formato aceito: ISBN-10 ou ISBN-13)") // International Standard Book Number
         String isbn,
 
         @Size(max = 500, message = "A sinopse deve ter no máximo 500 caracteres")

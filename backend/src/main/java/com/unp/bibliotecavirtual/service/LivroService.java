@@ -2,6 +2,7 @@ package com.unp.bibliotecavirtual.service;
 
 import com.unp.bibliotecavirtual.model.Livro;
 import com.unp.bibliotecavirtual.repository.LivroRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,13 +32,21 @@ public class LivroService {
         return livroRepository.findAll();
     }
 
-    public Livro editar(Livro livro) {
-        Optional<Livro> existente = livroRepository.findById(livro.getId());
-        if (existente.isPresent()) {
-            return livroRepository.save(livro); // atualiza os dados
-        } else {
-            throw new RuntimeException("Livro não encontrado para edição");
-        }
+    public Livro editar(Long id, Livro livroAtualizado) {
+        Optional<Livro> existente = livroRepository.findById(id);
+
+        if (existente.isEmpty()) throw new EntityNotFoundException("Livro não encontrado");
+
+        Livro storedBook = existente.get();
+
+        storedBook.setTitulo(livroAtualizado.getTitulo());
+        storedBook.setAutor(livroAtualizado.getAutor());
+        storedBook.setGenero(livroAtualizado.getGenero());
+        storedBook.setIsbn(livroAtualizado.getIsbn());
+        storedBook.setSinopse(livroAtualizado.getSinopse());
+        storedBook.setQuantidadeTotal(livroAtualizado.getQuantidadeTotal());
+
+        return livroRepository.save(storedBook);
     }
 
     public void deletar(Livro livro) {

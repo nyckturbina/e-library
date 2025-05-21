@@ -1,0 +1,44 @@
+{
+  "titulo": "Cem Anos de Solidão",
+  "autor": "Gabriel García Márquez",
+  "genero": "Realismo Mágico",
+  "isbn": "978-8501012074",
+  "sinopse": "A saga da família Buendía e a história da mítica cidade de Macondo.",
+  "quantidade": 12
+}
+
+{
+  "titulo": "Cem Anos de Solidão",
+  "autor": "Gabriel García Márquez",
+  "genero": "Realismo Mágico",
+  "isbn": "978-8501012074",
+  "sinopse": "A saga da família Buendía e a história da mítica cidade de Macondo.",
+  "quantidade": 12
+}
+
+{
+    "titulo": "O Senhor dos Anéis: A Sociedade do Anel",
+    "autor": "J.R.R. Tolkien",
+    "genero": "Fantasia Épica",
+    "isbn": "978-8533613379",
+    "sinopse": "A jornada de Frodo para destruir o Um Anel e salvar a Terra Média.",
+    "quantidade": 15
+  }
+  
+  {
+    "titulo": "Orgulho e Preconceito",
+    "autor": "Jane Austen",
+    "genero": "Romance Clássico",
+    "isbn": "9788573264233",
+    "sinopse": "A história de Elizabeth Bennet e Mr. Darcy em uma crítica à sociedade inglesa do século XIX.",
+    "quantidade": 10
+  }
+  
+  {
+    "titulo": "O Pequeno Príncipe",
+    "autor": "Antoine de Saint-Exupéry",
+    "genero": "Literatura Infantil/Filosófica",
+    "isbn": "978-8595081512",
+    "sinopse": "As reflexões filosóficas de um príncipe que viaja por diferentes planetas.",
+    "quantidade": 20
+  }

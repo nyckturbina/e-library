@@ -2,6 +2,7 @@ package com.unp.bibliotecavirtual.service;
 
 import com.unp.bibliotecavirtual.model.Livro;
 import com.unp.bibliotecavirtual.repository.LivroRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -90,23 +91,23 @@ class LivroServiceTest {
         when(livroRepository.findById(anyLong())).thenReturn(Optional.of(livroValido));
         when(livroRepository.save(any(Livro.class))).thenReturn(livroAtualizado);
 
-        Livro resultado = livroService.editar(livroAtualizado);
+        Livro resultado = livroService.editar(anyLong(), livroAtualizado);
 
         assertNotNull(resultado);
         assertEquals("Domain-Driven Design - Edição Especial", resultado.getTitulo());
         verify(livroRepository, times(1)).findById(anyLong());
-        verify(livroRepository, times(1)).save(livroAtualizado);
+        verify(livroRepository, times(1)).save(any(Livro.class));
     }
 
     @Test
     void editar_deveLancarExcecaoQuandoLivroNaoExistir() {
-        when(livroRepository.findById(1L)).thenReturn(Optional.empty());
+        when(livroRepository.findById(anyLong())).thenReturn(Optional.empty());
 
-        assertThrows(RuntimeException.class,
-                () -> livroService.editar(livroAtualizado),
+        assertThrows(EntityNotFoundException.class,
+                () -> livroService.editar(anyLong(), livroAtualizado),
                 "Deveria lançar exceção quando livro não existe");
 
-        verify(livroRepository, times(1)).findById(1L);
+        verify(livroRepository, times(1)).findById(anyLong());
         verify(livroRepository, never()).save(any());
     }
 
