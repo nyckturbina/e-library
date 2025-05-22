@@ -9,7 +9,9 @@
 **Projeto avaliativo de um sistema de biblioteca**  
 
 ## Padrões de Projeto utilizados
-- Strategy
+- MVC: Para definir a responsabilidade de cada pacote
+- DTOs: Para encapsulamento da estrutura de dados presentes no backend
+<!-- - Strategy -->
 
 ---
 
@@ -17,29 +19,29 @@
 
 - [Caio Souza (@cmoiss)](https://github.com/cmoiss)  
 - [Igor Vinícius (@Igorzon1)](https://github.com/Igorzon1)  
-
+- [Matheus Rondon (@matheusrv0)](https://github.com/matheusrv0)
 ---
 
 ### Contribuições  
 
 | Função               | Integrantes                          |
 |----------------------|--------------------------------------|
-| Project Manager/Tech Lead | Caio Souza                     |
-| Scrum Master         | Rodolfo Ribeiro                     |
-| Frontend             | Caio Souza e Breno                  |
-| Design               | Nycolas Justino                     |
-| Backend              | Igor Vinícius, William, Matheus     |
-| Tester               | Gabriel Patrício, Nycolas Justino   |
+| Project Manager/Tech Lead | Caio                            |
+| Scrum Master         | Rodolfo Ribeiro                      |
+| Frontend             | Caio e Breno                         |
+| Design               | Nycolas                              |
+| Backend              | Caio, Igor, William, Matheus         |
+| Tester               | Caio, Gabriel, Nycolas               |
 
 ---
 
 ## 🎯 O que aprendi  
 
 **Caio Souza**  
-> "Aprendi a gerenciar equipes considerando pontos fortes/fracos, ensinar conceitos técnicos e integrar frontend/backend."
+> "Aprendi a gerenciar equipes considerando pontos fortes/fracos, bem como ensiná-los conceitos técnicos. Além de integrar frontend/backend usando uma API Rest."
 
-**William**  
-> "Aprendi sobre o desenvolvimento de rotas com Spring Boot para integração com frontend."
+<!-- **William**  
+> "Aprendi sobre o desenvolvimento de rotas com Spring Boot para integração com frontend."-->
 
 ---
 
@@ -49,4 +51,4 @@
 🚀 **Tecnologias**: Spring Boot, NextJS, Git  
 📈 **Soft Skills**: Gestão de tempo, comunicação ágil  
 
-*(Atualizado em 14/05/2025)*  
+*(Atualizado em 22/05/2025)*  
