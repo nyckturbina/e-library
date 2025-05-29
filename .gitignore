@@ -38,6 +38,7 @@ backend/build/
 backend/.vscode/
 
 ### Frontend (Next.js) ###
+workspaces/e-library/frontend
 frontend/node_modules/
 frontend/.pnp
 frontend/.pnp.*

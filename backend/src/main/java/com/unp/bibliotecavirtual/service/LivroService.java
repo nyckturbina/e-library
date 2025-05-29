@@ -1,13 +1,15 @@
 package com.unp.bibliotecavirtual.service;
 
-import com.unp.bibliotecavirtual.model.Livro;
-import com.unp.bibliotecavirtual.repository.LivroRepository;
-import jakarta.persistence.EntityNotFoundException;
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import com.unp.bibliotecavirtual.model.Livro;
+import com.unp.bibliotecavirtual.repository.LivroRepository;
+
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class LivroService {

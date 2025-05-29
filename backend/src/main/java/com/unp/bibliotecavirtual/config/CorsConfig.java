@@ -1,4 +1,4 @@
-package com.seuprojeto.config;
+package com.unp.bibliotecavirtual.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

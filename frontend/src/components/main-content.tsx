@@ -10,7 +10,7 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 import { books } from "@/models/books-provider";
-import CreateLivroModal from "./home/create-livro/create-livro";
+import CreateLivroModal from "./home/create-livro/create-livro-modal";
 
 export default function MainContent() {
   return (

@@ -12,7 +12,7 @@ public record LivroRequestDTO(
         @Size(min = 3, max = 50, message = "O nome do autor deve ter entre 3 e 50 caracteres")
         String autor,
 
-        @NotBlank(message = "O gênero é obrigatório")
+        // @NotBlank(message = "O gênero é obrigatório")
         @Size(max = 30, message = "O gênero deve ter no máximo 30 caracteres")
         String genero,
 
