@@ -1,36 +1,37 @@
-"use client";
-
+import { updateBook } from "@/api-consumer/livro-consumer";
+import Gender from "@/components/home/create-livro/genero";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { Book } from "@/models/book";
 import { FormLivroSchema, RequestLivroType } from "@/models/livro-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import axios from "axios";
 import { useForm } from "react-hook-form";
-import { URL_API_LIVROS as URL_API } from "@/api-consumer/livro-consumer";
-import { Label } from "../ui/label";
-import { Input } from "../ui/input";
-import { Textarea } from "../ui/textarea";
-import Gender from "../home/create-livro/genero";
 
-interface CreateLivroFormProps {
+interface EditBookProps {
+  book: Book;
   onSuccess?: () => void;
 }
 
-export default function CreateLivroForm({ onSuccess }: CreateLivroFormProps) {
+export default function EditBookForm({ book, onSuccess }: EditBookProps) {
   const {
     register,
     handleSubmit,
     formState: { errors }
   } = useForm<RequestLivroType>({
-    resolver: zodResolver(FormLivroSchema)
+    resolver: zodResolver(FormLivroSchema),
+    defaultValues: {
+      titulo: book.titulo,
+      autor: book.autor,
+      sinopse: book.sinopse,
+      isbn: book.isbn,
+      quantidade: book.quantidadeTotal
+    }
   });
 
-  const submit = async (data: RequestLivroType) => {
-    try {
-      await axios.post(URL_API, data);
-      console.log("Dados do livro enviados:", data);
-      if (onSuccess) onSuccess(); // Fecha modal
-    } catch (error) {
-      console.error(`Erro na requisção: ${error}`);
-    }
+  const submit = (updatedBook: RequestLivroType) => {
+    updateBook(book.id, updatedBook);
+    if (onSuccess) onSuccess();
   };
 
   return (
@@ -84,7 +85,9 @@ export default function CreateLivroForm({ onSuccess }: CreateLivroFormProps) {
             <Input
               id="quantidade"
               type="number"
-              {...register("quantidade", { valueAsNumber: true })}
+              {...register("quantidade", {
+                valueAsNumber: true
+              })}
             />
             {errors.quantidade && (
               <p className="text-red-500 col-span-5 mb-2">

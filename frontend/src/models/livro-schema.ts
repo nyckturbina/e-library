@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const CreateLivroSchema = z.object({
+export const FormLivroSchema = z.object({
   titulo: z
     .string()
     .min(1, { message: "Título é obrigatório" })
@@ -56,4 +56,4 @@ export const CreateLivroSchema = z.object({
     .int({ message: "Quantidade deve ser um número inteiro" })
 });
 
-export type LivroType = z.infer<typeof CreateLivroSchema>;
+export type RequestLivroType = z.infer<typeof FormLivroSchema>;

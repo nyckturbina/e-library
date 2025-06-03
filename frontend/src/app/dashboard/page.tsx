@@ -3,10 +3,10 @@ import { Alert, AlertTitle } from "@/components/ui/alert";
 
 import CreateLivroModal from "@/components/dashboard/create-livro-modal";
 import { CheckCircle2Icon } from "lucide-react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import DashboardTable from "./dashboard-table";
-import Link from "next/link";
 
 export default function Dashboard() {
   const router = useRouter();
@@ -24,8 +24,11 @@ export default function Dashboard() {
   return (
     <div className="p-10 justify-center min-h-screen flex items-center flex-col gap-3">
       <h1 className="text-2xl">Menu principal (em andamento)</h1>
+
       <DashboardTable />
+
       <CreateLivroModal />
+
       <Alert variant={"default"} className="max-w-sm">
         <CheckCircle2Icon />
         <AlertTitle>Logado com sucesso</AlertTitle>

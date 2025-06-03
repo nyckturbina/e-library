@@ -1,11 +1,15 @@
 import { Book } from "@/models/book";
-import { LivroType } from "@/models/livro-schema";
+import { RequestLivroType } from "@/models/livro-schema";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import axios, { HttpStatusCode } from "axios";
 
 export const URL_API_LIVROS = "http://localhost:8080/livros";
 
-export async function createLivro(livro: LivroType) {
+const api = axios.create({
+  baseURL: URL_API_LIVROS
+});
+
+export async function createLivro(livro: RequestLivroType) {
   try {
     const response = await fetch(URL_API_LIVROS, {
       method: "POST",
@@ -19,7 +23,7 @@ export async function createLivro(livro: LivroType) {
       throw Error(`HTTP Erro! Status: ${response.status}`);
     }
 
-    const result: LivroType = await response.json();
+    const result: RequestLivroType = await response.json();
     console.log(`Sucess: ${result}`);
     return result;
   } catch (error) {
@@ -37,6 +41,19 @@ export async function fetchBooks(): Promise<Book[]> {
   } catch (error) {
     console.error(`Erro na requisição: ${error}`);
     throw error;
+  }
+}
+
+export async function updateBook(
+  bookId: number,
+  updatedBook: RequestLivroType
+) {
+  try {
+    await api.put(`/${bookId}`, updatedBook).then(response => {
+      console.log("Edição realizada com sucesso! " + response.data);
+    });
+  } catch (error) {
+    console.error(`Erro na requisição: ${error}`);
   }
 }
 
