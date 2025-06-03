@@ -1,0 +1,108 @@
+@startuml
+skinparam classAttributeIconSize 0
+left to right direction
+
+' Estilos por tipo
+' Usuários - Azul
+class Usuario << (U,#ADD8E6) >> {
+    -id: Long
+    -nome: String
+    -email: String
+    -senha: String
+    +autenticar(): boolean
+    +solicitarEmprestimo(livro: Livro): Emprestimo
+    +devolverLivro(emprestimo: Emprestimo)
+}
+
+class Administrador << (U,#ADD8E6) >> {
+    +gerarRelatorio()
+}
+
+class Cliente << (U,#ADD8E6) >> {
+    -livroService: LivroService
+    -recomendacaoService: RecomendacaoService
+    +avaliarLivro(livro: Livro, like: boolean)
+    +receberNotificacao(notificacao: Notificacao)
+}
+
+' Serviços - Verde
+class LivroService << (S,#90EE90) >> {
+    +buscarPorTitulo(titulo: String): List<Livro>
+    +atualizarDisponibilidade(livro: Livro, delta: int)
+    +consultarDisponibilidade(livro: Livro): int
+}
+
+class ClienteService << (S,#90EE90) >> {
+    +gerenciarClientes()
+}
+
+class RecomendacaoService << (S,#90EE90) >> {
+    +recomendarLivros(cliente: Cliente): List<Livro>
+    +registrarAvaliacao(cliente: Cliente, livro: Livro, like: boolean)
+}
+
+' Domínio - Amarelo
+class Livro << (D,#FFFF99) >> {
+    -id: Long
+    -titulo: String
+    -autor: String
+    -genero: String
+    -isbn: String
+    -sinopse: String
+    -paginas: int
+    -quantidadeDisponivel: int
+    -imagem: String
+    +isDisponivel(): boolean
+}
+
+class Emprestimo << (D,#FFFF99) >> {
+    -id: Long
+    -cliente: Cliente
+    -livro: Livro
+    -dataEmprestimo: Date
+    -dataDevolucao: Date
+    -multa: Multa
+    +calcularPrazoDevolucao(): Date
+    +registrarDevolucao(data: Date): void
+}
+
+class Multa << (D,#FFFF99) >> {
+    -valorPorDia: double = 2.0
+    +calcularAtraso(diasAtraso: int): double
+}
+
+class Notificacao << (D,#FFFF99) >> {
+    -tipo: String
+    -destinatario: Cliente
+    -dataEnvio: Date
+    -mensagem: String
+    +enviar(): void
+}
+
+' Heranças
+Usuario <|-- Administrador
+Usuario <|-- Cliente
+
+' Relacionamentos
+Administrador --> LivroService : usa
+Administrador --> ClienteService : usa
+
+Cliente --> LivroService : usa
+Cliente --> RecomendacaoService : usa
+Cliente --> Notificacao : recebe
+Cliente --> Emprestimo : cria
+
+Emprestimo --> Livro : usa
+Emprestimo --> Cliente : usa
+Emprestimo --> Multa : usa
+Emprestimo --> RecomendacaoService : "após devolução"
+
+LivroService --> Livro : manipula
+
+Multa --> Notificacao : gera
+
+RecomendacaoService --> Livro : usa
+
+Notificacao --> Cliente : gera
+
+@enduml
