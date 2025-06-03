@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/table";
 import { Book } from "@/models/book";
 import { books as booksProvided } from "@/models/books-provider";
-import { Trash2Icon } from "lucide-react";
+import DeleteBook from "./delete-book";
 import EditBook from "./edit-book-modal";
 
 export default function DashboardTable() {
@@ -50,9 +50,7 @@ export default function DashboardTable() {
               <TableCell className="text-right">
                 <div className="flex">
                   <EditBook book={book} />
-                  <button className="text-red-900 cursor-pointer">
-                    <Trash2Icon />
-                  </button>
+                  <DeleteBook book={book} />
                 </div>
               </TableCell>
             </TableRow>

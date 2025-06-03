@@ -57,6 +57,20 @@ export async function updateBook(
   }
 }
 
+export async function deleteBook(bookId: number) {
+  try {
+    await api.delete(`/${bookId}`).then(response => {
+      if (response.status === 204) {
+        console.log("Exclusão realizada com sucesso!");
+      } else {
+        console.log("Resposta inesperada");
+      }
+    });
+  } catch (error) {
+    console.error(`Erro na requisição: ${error}`);
+  }
+}
+
 export function useBooks() {
   return useQuery<Book[], Error>({
     queryKey: ["books"],
