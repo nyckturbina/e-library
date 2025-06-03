@@ -1,3 +1,6 @@
+"use client";
+
+import { useBooks } from "@/api-consumer/livro-consumer";
 import BookCard from "@/components/book-card";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -7,12 +10,43 @@ import {
   PaginationItem,
   PaginationLink,
   PaginationNext,
-  PaginationPrevious,
+  PaginationPrevious
 } from "@/components/ui/pagination";
-import { books } from "@/models/books-provider";
+import { books as mockBooks } from "@/models/books-provider";
 import CreateLivroModal from "./home/create-livro/create-livro-modal";
 
 export default function MainContent() {
+  let booksCards;
+
+  const { data, isLoading, isFetching, error } = useBooks();
+
+  if (data) {
+    booksCards = data.map(book => (
+      <BookCard
+        key={book.id}
+        capa={book.capa}
+        titulo={book.titulo}
+        autor={book.autor}
+      />
+    ));
+  }
+
+  if (isLoading && isFetching) {
+    return (booksCards = <div className="text-center my-40">Carregando livros...</div>);
+  }
+
+  if (error) {
+    booksCards = mockBooks.map(book => (
+      <BookCard
+        key={book.id}
+        capa={book.capa}
+        titulo={book.titulo}
+        autor={book.autor}
+        avaliacao={book.avaliacao}
+      />
+    ));
+  }
+
   return (
     <div className="flex flex-col items-center gap-5">
       <aside></aside>
@@ -24,15 +58,7 @@ export default function MainContent() {
             </CardTitle>
           </CardHeader>
           <CardContent className="flex justify-center flex-wrap gap-3">
-            {books.map((book) => (
-              <BookCard
-                key={book.id}
-                capa={book.autor}
-                titulo={book.titulo}
-                autor={book.autor}
-                avaliacao={book.avaliacao}
-              />
-            ))}
+            {booksCards}
           </CardContent>
 
           <Pagination>
