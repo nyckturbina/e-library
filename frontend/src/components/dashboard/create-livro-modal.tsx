@@ -1,17 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import { Button } from "../../ui/button";
+import { Button } from "../ui/button";
 import {
-  DialogHeader,
-  DialogFooter,
   Dialog,
-  DialogTrigger,
+  DialogClose,
   DialogContent,
-  DialogTitle,
   DialogDescription,
-  DialogClose
-} from "../../ui/dialog";
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger
+} from "../ui/dialog";
 import CreateLivroForm from "./create-livro-form";
 
 export default function CreateLivroModal() {

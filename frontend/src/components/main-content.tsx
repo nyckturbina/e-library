@@ -13,7 +13,6 @@ import {
   PaginationPrevious
 } from "@/components/ui/pagination";
 import { books as mockBooks } from "@/models/books-provider";
-import CreateLivroModal from "./home/create-livro/create-livro-modal";
 
 export default function MainContent() {
   let booksCards;
@@ -32,7 +31,9 @@ export default function MainContent() {
   }
 
   if (isLoading && isFetching) {
-    return (booksCards = <div className="text-center my-40">Carregando livros...</div>);
+    return (booksCards = (
+      <div className="text-center my-40">Carregando livros...</div>
+    ));
   }
 
   if (error) {
@@ -87,8 +88,6 @@ export default function MainContent() {
           </Pagination>
         </Card>
       </main>
-
-      <CreateLivroModal />
     </div>
   );
 }

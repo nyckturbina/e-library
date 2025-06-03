@@ -4,11 +4,11 @@ import { CreateLivroSchema, LivroType } from "@/models/livro-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { useForm } from "react-hook-form";
-import { Input } from "../../ui/input";
-import { Label } from "../../ui/label";
-import { Textarea } from "../../ui/textarea";
-import Gender from "./genero";
 import { URL_API_LIVROS as URL_API } from "@/api-consumer/livro-consumer";
+import { Label } from "../ui/label";
+import { Input } from "../ui/input";
+import { Textarea } from "../ui/textarea";
+import Gender from "../home/create-livro/genero";
 
 interface CreateLivroFormProps {
   onSuccess?: () => void;

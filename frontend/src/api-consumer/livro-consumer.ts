@@ -44,6 +44,7 @@ export function useBooks() {
   return useQuery<Book[], Error>({
     queryKey: ["books"],
     queryFn: fetchBooks,
+    refetchInterval: 5 * 1000,
     retry: 0
   });
 }
