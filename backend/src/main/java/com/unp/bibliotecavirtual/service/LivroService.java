@@ -17,7 +17,6 @@ public class LivroService {
     @Autowired
     private LivroRepository livroRepository;
 
-
     public Livro cadastrar(Livro livro) {
         // Verificar se livro já existe
 

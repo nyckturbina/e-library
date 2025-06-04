@@ -33,6 +33,9 @@ public class Livro {
     @Setter
     private Integer quantidadeTotal;
 
+    @Setter
+    private Integer avaliacao;
+
     public Livro(String titulo, String autor, String genero, String isbn) {
         this.titulo = titulo;
         this.autor = autor;
@@ -44,5 +47,12 @@ public class Livro {
         this(titulo, autor, genero, isbn);
         this.sinopse = sinopse;
         this.quantidadeTotal = quantidadeTotal;
+    }
+
+    public Livro(String titulo, String autor, String genero, String isbn, String sinopse, Integer quantidadeTotal, Integer avaliacao) {
+        this(titulo, autor, genero, isbn);
+        this.sinopse = sinopse;
+        this.quantidadeTotal = quantidadeTotal;
+        this.avaliacao = avaliacao;
     }
 }

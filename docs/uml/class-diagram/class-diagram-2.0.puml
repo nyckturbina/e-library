@@ -10,6 +10,14 @@ package "Service" <<Service>> {
     class AutenticadorUsuario {
         +autenticar(): boolean
     }
+
+    class GeradorRelatorio {
+        + gerarRelatorio()
+    }
+
+    class RecomendadorLivros {
+        + recomendarLivros(cliente: Cliente): List<Livro>
+    }
 }
 
 ' Estilos por tipo
@@ -24,13 +32,12 @@ class Usuario << (U,#ADD8E6) >> {
 }
 
 class Administrador << (U,#ADD8E6) >> {
-    +gerarRelatorio()
+    
 }
 
 class Cliente << (U,#ADD8E6) >> {
     - cpf: String
     -livroService: LivroService
-    -recomendacaoService: RecomendacaoService
     +avaliarLivro(livro: Livro, like: boolean)
     +receberNotificacao(notificacao: Notificacao)
 }
@@ -98,6 +105,7 @@ AutenticadorUsuario --> Usuario : autentica
 
 Administrador --> LivroService : usa
 Administrador --> ClienteService : usa
+Administrador --> GeradorRelatorio : usa
 
 Cliente --> LivroService : usa
 Cliente --> RecomendacaoService : usa
@@ -110,6 +118,8 @@ Emprestimo --> Multa : usa
 Emprestimo --> RecomendacaoService : "após devolução"
 
 LivroService --> Livro : manipula
+
+RecomendadorLivros --> Cliente : recomenda
 
 Multa --> Notificacao : gera
 

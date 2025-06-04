@@ -1,7 +1,7 @@
 import { Book } from "@/models/book";
 import { RequestLivroType } from "@/models/livro-schema";
 import { useQuery } from "@tanstack/react-query";
-import axios, { HttpStatusCode } from "axios";
+import axios from "axios";
 
 export const URL_API_LIVROS = "http://localhost:8080/livros";
 
