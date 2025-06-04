@@ -1,6 +1,16 @@
-@startuml
+@startuml "Diagrama de Classe"
 skinparam classAttributeIconSize 0
 left to right direction
+
+skinparam package {
+    BackgroundColor<<Service>> LightSalmon
+}
+
+package "Service" <<Service>> {
+    class AutenticadorUsuario {
+        +autenticar(): boolean
+    }
+}
 
 ' Estilos por tipo
 ' Usuários - Azul
@@ -9,7 +19,6 @@ class Usuario << (U,#ADD8E6) >> {
     -nome: String
     -email: String
     -senha: String
-    +autenticar(): boolean
     +solicitarEmprestimo(livro: Livro): Emprestimo
     +devolverLivro(emprestimo: Emprestimo)
 }
@@ -19,6 +28,7 @@ class Administrador << (U,#ADD8E6) >> {
 }
 
 class Cliente << (U,#ADD8E6) >> {
+    - cpf: String
     -livroService: LivroService
     -recomendacaoService: RecomendacaoService
     +avaliarLivro(livro: Livro, like: boolean)
@@ -84,6 +94,8 @@ Usuario <|-- Administrador
 Usuario <|-- Cliente
 
 ' Relacionamentos
+AutenticadorUsuario --> Usuario : autentica
+
 Administrador --> LivroService : usa
 Administrador --> ClienteService : usa
 
