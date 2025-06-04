@@ -22,9 +22,13 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 /**
  * TO-DO:
+ * [] Retorne o StatusCode do Erro "Cliente já existe" ao tentar cadastrar cliente duplicado
  * [] Retorne os StatusCode de Erro nos tratementos de exceção
  * [] Retornar erro caso cadastro com formato inválido
- * [] Chamar serviço de cadastro
+ * [] Retornar exceção + status code para caso Email já existente (unique no banco de dados)
+ * [] Retornar exceção + status code para caso CPF já existente (unique no banco de dados)
+ * [] Retornar exceção + status code para caso Email formato inválido (note no ClienteRequestDTO)
+ * [] Retornar exceção + status code para caso CPF formato inválido (note no ClienteRequestDTO)
  **/
 @RestController
 @RequestMapping("/clientes")
@@ -46,18 +50,16 @@ public class ClienteController {
             return ResponseEntity.status(CREATED).body(usuarioResponse);
         } catch (ClienteExistenteException e) {
             System.out.println(e.getStackTrace());
-            return null; // Retorne o StatusCode do Erro
+            return null; // Retorne o StatusCode do Erro "Cliente já existe" ao tentar cadastrar cliente duplicado
         }
-
-
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> buscarClienteID(@PathVariable Long id){
+    public ResponseEntity<?> buscarClienteID(@PathVariable Long id) {
         try {
             Cliente usuario = clienteService.buscarPorId(id);
             return ResponseEntity.ok(ClienteMapperDTO.toResponse(usuario));
-        }catch (ClienteNaoEncontrado ex){
+        } catch (ClienteNaoEncontrado ex) {
             return ResponseEntity.status(NOT_FOUND).body(ex.getMessage());
         }
     }
@@ -76,13 +78,14 @@ public class ClienteController {
         return ResponseEntity.ok(ClienteMapperDTO.toResponse(novoCliente));
     }
 
-//    @DeleteMapping("/{id}")
-//    public ResponseEntity<?> deletarCliente(@PathVariable Long id){
-//        try {
-//            clienteService.buscarPorId(id);
-//            return ResponseEntity.noContent().build();
-//        }catch (ClienteNaoEncontrado naoEncontrado){
-//            return ResponseEntity.status(NOT_FOUND).body(naoEncontrado.getMessage());
-//        }
-//    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deletarCliente(@PathVariable Long id) {
+        try {
+            clienteService.buscarPorId(id);
+            clienteService.deletar(id);
+            return ResponseEntity.noContent().build();
+        } catch (ClienteNaoEncontrado naoEncontrado) {
+            return ResponseEntity.status(NOT_FOUND).body(naoEncontrado.getMessage());
+        }
+    }
 }

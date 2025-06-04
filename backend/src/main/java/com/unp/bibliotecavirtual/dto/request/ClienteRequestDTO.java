@@ -1,6 +1,7 @@
 package com.unp.bibliotecavirtual.dto.request;
 
 import jakarta.validation.constraints.*;
+import org.hibernate.validator.constraints.br.CPF;
 
 public record ClienteRequestDTO(
         @NotBlank(message = "O nome é obrigatório")
@@ -8,7 +9,7 @@ public record ClienteRequestDTO(
         String nome,
 
         @NotBlank(message = "cpf é obrigatório")
-        @Size(min = 11, max = 11, message = "cpf deve ter 11 digitos")
+        @CPF(message = "Formato de CPF inválido")
         String cpf,
 
         @NotBlank(message = "O e-mail é obrigatório")
