@@ -1,12 +1,13 @@
 "use client";
 import { Alert, AlertTitle } from "@/components/ui/alert";
 
-import CreateLivroModal from "@/components/dashboard/create-livro-modal";
+import CreateLivroModal from "@/components/dashboard-livros/create-livro-modal";
 import { CheckCircle2Icon } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import DashboardTable from "./dashboard-table";
+import DashboardTable from "./dashboardclientes-table";
+import { Button } from "@/components/ui/button";
 
 export default function Dashboard() {
   const router = useRouter();
@@ -23,18 +24,36 @@ export default function Dashboard() {
 
   return (
     <div className="p-10 justify-center min-h-screen flex items-center flex-col gap-3">
-      <h1 className="text-2xl">Menu principal (em andamento)</h1>
-
-      <DashboardTable />
-
-      <CreateLivroModal />
+      <h1 className="text-2xl">Gerenciamento de clientes</h1>
 
       <Alert variant={"default"} className="max-w-sm">
         <CheckCircle2Icon />
         <AlertTitle>Logado com sucesso</AlertTitle>
       </Alert>
+      
+      <DashboardTable />
 
+      <CreateLivroModal />
+
+
+
+      <div>
+        <Button className="cursor-pointer" variant="outline" onClick={() => router.push("/dashboard-livros")}>
+          Gerenciar livros
+        </Button>
+      </div>
+
+      {/* <Link href={"/dashboard-livros"}>Gerenciar livros</Link> */}
+      
       <Link href={"/"}>Voltar para página inicial</Link>
+
+        {/* 
+        Navegação entre dashboards (criação de livros e usuário)
+        Botão de cadastrar cliente (add nome,cpf,email,senha)
+        Tela de gerenciamento de clientes (variação do dashboard de livros)
+        Botões de ações: editar e excluir
+        Tabela de usuários
+      */ }
     </div>
   );
 }
