@@ -20,7 +20,8 @@ public class ClienteMapperDTO {
                 cliente.getNome(),
                 cliente.getCpf(),
                 cliente.getEmail(),
-                cliente.getSenha()
+                cliente.getSenha(),
+                cliente.isDeleted()
         );
     }
 }

@@ -1,4 +1,4 @@
-import { deleteBook } from "@/api-consumer/livro-consumer";
+import { deleteBook } from "@/service/livro-consumer";
 import { Button } from "@/components/ui/button";
 import {
   DialogClose,

@@ -1,4 +1,4 @@
-import { updateBook } from "@/api-consumer/livro-consumer";
+import { updateBook } from "@/service/livro-consumer";
 // import Gender from "@/components/home/create-livro/genero";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";

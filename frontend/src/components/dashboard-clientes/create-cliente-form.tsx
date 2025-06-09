@@ -4,7 +4,7 @@ import { FormLivroSchema, RequestLivroType } from "@/models/livro-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import axios from "axios";
 import { useForm } from "react-hook-form";
-import { URL_API_LIVROS as URL_API } from "@/api-consumer/livro-consumer";
+import { URL_API_LIVROS as URL_API } from "@/service/livro-consumer";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
