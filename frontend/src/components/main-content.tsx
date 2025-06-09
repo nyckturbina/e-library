@@ -1,6 +1,6 @@
 "use client";
 
-import { useBooks } from "@/api-consumer/livro-consumer";
+import { useBooks } from "@/service/livro-consumer";
 import BookCard from "@/components/book-card";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -12,7 +12,7 @@ import {
   PaginationNext,
   PaginationPrevious
 } from "@/components/ui/pagination";
-import { books as mockBooks } from "@/models/books-provider";
+import { books as mockBooks } from "@/models/providers/books-provider";
 
 export default function MainContent() {
   let booksCards;

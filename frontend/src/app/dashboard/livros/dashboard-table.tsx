@@ -1,4 +1,4 @@
-import { useBooks } from "@/api-consumer/livro-consumer";
+import { useBooks } from "@/service/livro-consumer";
 import {
   Table,
   TableBody,
@@ -9,7 +9,7 @@ import {
   TableRow
 } from "@/components/ui/table";
 import { Book } from "@/models/book";
-import { books as booksProvided } from "@/models/books-provider";
+import { books as booksProvided } from "@/models/providers/books-provider";
 import DeleteBook from "./delete-book";
 import EditBook from "./edit-book-modal";
 import { useState } from "react";

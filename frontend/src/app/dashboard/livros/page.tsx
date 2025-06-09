@@ -25,7 +25,7 @@ export default function Dashboard() {
   return (
     <div className="p-10 justify-center min-h-screen flex items-center flex-col gap-3">
       <h1 className="text-2xl">Gerenciamento de livros</h1>
-      
+
       <Alert variant={"default"} className="max-w-sm">
         <CheckCircle2Icon />
         <AlertTitle>Logado com sucesso</AlertTitle>
@@ -36,23 +36,26 @@ export default function Dashboard() {
       <CreateLivroModal />
 
       <div>
-        <Button className="cursor-pointer" variant="outline" onClick={() => router.push("/dashboard-clientes")}>
+        <Button
+          className="cursor-pointer"
+          variant="outline"
+          onClick={() => router.push("/dashboard/clientes")}
+        >
           Gerenciar clientes
         </Button>
       </div>
 
       {/* <Link href={"/dashboard-clientes"}>Gerenciar clientes</Link> */}
-      
+
       <Link href={"/"}>Voltar para página inicial</Link>
 
-        {/* 
+      {/* 
         Navegação entre dashboards (criação de livros e usuário)
         Botão de cadastrar cliente (add nome,cpf,email,senha)
         Tela de gerenciamento de clientes (variação do dashboard de livros)
         Botões de ações: editar e excluir
         Tabela de usuários
-      */ }
-
+      */}
     </div>
   );
 }

@@ -1,7 +1,5 @@
-"use client";
-
-import { useState } from "react";
-import { Button } from "../ui/button";
+import CreateLivroForm from "@/components/dashboard-livros/create-livro-form";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogClose,
@@ -11,10 +9,18 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger
-} from "../ui/dialog";
-import CreateLivroForm from "./create-livro-form";
+} from "@/components/ui/dialog";
+import { useState } from "react";
+import CreateClientForm from "./create-client-form";
+import { Cliente } from "@/models/cliente";
 
-export default function CreateLivroModal() {
+interface CreateClientDialogProps {
+  onClientAdded: (client: Cliente) => void;
+}
+
+export default function CreateClientDialog({
+  onClientAdded
+}: CreateClientDialogProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -26,21 +32,24 @@ export default function CreateLivroModal() {
 
         <DialogContent className="overflow-y-auto max-h-[90vh]">
           <DialogHeader>
-            <DialogTitle>Cadastrar Cliente</DialogTitle>
+            <DialogTitle>Cadastrar cliente</DialogTitle>
             <DialogDescription>
               Insira os dados nos campos abaixo.
             </DialogDescription>
           </DialogHeader>
 
-          <CreateLivroForm onSuccess={() => setIsOpen(false)} />
+          <CreateClientForm
+            onSuccess={() => setIsOpen(false)}
+            onClientAdded={onClientAdded}
+          />
 
           <DialogFooter>
-            <DialogClose>
+            <DialogClose asChild>
               <Button variant={"ghost"} type="button">
                 Cancelar
               </Button>
             </DialogClose>
-            <Button type="submit" form="create-livro-form">
+            <Button type="submit" form="create-client-form">
               Salvar
             </Button>
           </DialogFooter>
