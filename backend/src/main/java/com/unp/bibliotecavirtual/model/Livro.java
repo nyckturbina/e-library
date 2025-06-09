@@ -41,9 +41,6 @@ public class Livro {
     @Setter
     private Integer avaliacao;
 
-    @Setter
-    private Integer avaliacao;
-
     public Livro(String titulo, String autor, String genero, String isbn) {
         this.titulo = titulo;
         this.autor = autor;
@@ -68,13 +65,6 @@ public class Livro {
         this(titulo, autor, genero, isbn, sinopse, exemplaresDisponiveisEmEstoque);
         this.exemplaresDisponiveisEmEstoque = exemplaresDisponiveisEmEstoque;
         this.numeroPaginas = numeroPaginas;
-        this.avaliacao = avaliacao;
-    }
-
-    public Livro(String titulo, String autor, String genero, String isbn, String sinopse, Integer quantidadeTotal, Integer avaliacao) {
-        this(titulo, autor, genero, isbn);
-        this.sinopse = sinopse;
-        this.quantidadeTotal = quantidadeTotal;
         this.avaliacao = avaliacao;
     }
 }
