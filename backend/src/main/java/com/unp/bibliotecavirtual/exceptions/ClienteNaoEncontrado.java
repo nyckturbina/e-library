@@ -1,6 +1,6 @@
 package com.unp.bibliotecavirtual.exceptions;
 
-public class ClienteNaoEncontrado extends RuntimeException{
+public class ClienteNaoEncontrado extends Exception {
     public ClienteNaoEncontrado() {
         super("Ocorreu uma exceção: Usuário não encontrado"); 
     }

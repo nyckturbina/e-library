@@ -24,7 +24,7 @@ public class LivroMapperDTO {
                 livro.getGenero(),
                 livro.getIsbn(),
                 livro.getSinopse(),
-                livro.getQuantidadeTotal()
+                livro.getExemplaresDisponiveisEmEstoque()
         );
     }
 }
