@@ -7,6 +7,8 @@ import org.hibernate.annotations.SQLDelete;
 @Getter
 @NoArgsConstructor
 @RequiredArgsConstructor
+@ToString
+@EqualsAndHashCode
 @Entity
 // Não sei como aplicar softdelete, apliquem e testem ~Caio
 //@Table(name = "clientes")

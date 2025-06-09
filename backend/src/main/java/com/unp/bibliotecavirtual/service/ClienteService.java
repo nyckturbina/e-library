@@ -3,6 +3,7 @@ package com.unp.bibliotecavirtual.service;
 import java.util.List;
 
 import com.unp.bibliotecavirtual.exceptions.ClienteExistenteException;
+import com.unp.bibliotecavirtual.exceptions.ClienteNaoEncontrado;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,12 +30,12 @@ public class ClienteService {
         return clienteRepository.findAll();
     }
 
-    public Cliente buscarPorId(Long id) {
+    public Cliente buscarPorId(Long id) throws ClienteNaoEncontrado {
         return clienteRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
+                .orElseThrow(() -> new ClienteNaoEncontrado());
     }
 
-    public Cliente editar(Long id, Cliente clienteAtualizado) {
+    public Cliente editar(Long id, Cliente clienteAtualizado) throws ClienteNaoEncontrado {
         Cliente cliente = buscarPorId(id);
 
         cliente.setNome(clienteAtualizado.getNome());
@@ -45,7 +46,7 @@ public class ClienteService {
         return clienteRepository.save(cliente);
     }
 
-    public void deletar(Long id) {
+    public void deletar(Long id) throws ClienteNaoEncontrado {
         Cliente cliente = buscarPorId(id);
         clienteRepository.delete(cliente);
     }

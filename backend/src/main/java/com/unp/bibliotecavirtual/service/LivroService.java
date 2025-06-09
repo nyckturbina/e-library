@@ -45,7 +45,7 @@ public class LivroService {
         storedBook.setGenero(livroAtualizado.getGenero());
         storedBook.setIsbn(livroAtualizado.getIsbn());
         storedBook.setSinopse(livroAtualizado.getSinopse());
-        storedBook.setQuantidadeTotal(livroAtualizado.getQuantidadeTotal());
+        storedBook.setExemplaresDisponiveisEmEstoque(livroAtualizado.getExemplaresDisponiveisEmEstoque());
 
         return livroRepository.save(storedBook);
     }

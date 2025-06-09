@@ -1,0 +1,108 @@
+package com.unp.bibliotecavirtual.service.emprestimo;
+
+import com.unp.bibliotecavirtual.exceptions.ClienteNaoEncontrado;
+import com.unp.bibliotecavirtual.exceptions.EmprestimoNotFoundException;
+import com.unp.bibliotecavirtual.exceptions.LivroNaoDisponivelException;
+import com.unp.bibliotecavirtual.exceptions.LivroNotFoundException;
+import com.unp.bibliotecavirtual.model.Cliente;
+import com.unp.bibliotecavirtual.model.Emprestimo;
+import com.unp.bibliotecavirtual.model.Livro;
+import com.unp.bibliotecavirtual.repository.ClienteRepository;
+import com.unp.bibliotecavirtual.repository.EmprestimoRepository;
+import com.unp.bibliotecavirtual.repository.LivroRepository;
+import com.unp.bibliotecavirtual.service.EmprestimoService;
+import com.unp.bibliotecavirtual.service.emprestimo.utils.ClienteListProvider;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.util.ReflectionTestUtils;
+
+import java.time.LocalDate;
+import java.util.Optional;
+
+import static com.unp.bibliotecavirtual.service.emprestimo.utils.ClienteListProvider.getClientes;
+import static com.unp.bibliotecavirtual.service.emprestimo.utils.EmprestimoListProvider.getEmprestimosTeste;
+import static com.unp.bibliotecavirtual.service.emprestimo.utils.LivroListProvider.getLivros;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.when;
+
+@ExtendWith(MockitoExtension.class)
+class RegistrarDevolucaoTest {
+
+    @InjectMocks
+    EmprestimoService emprestimoService;
+
+    @Mock
+    EmprestimoRepository emprestimoRepository;
+
+    @Mock
+    LivroRepository livroRepository;
+
+    @Mock
+    ClienteRepository clienteRepository;
+
+
+    Livro livro;
+
+    Cliente cliente;
+
+    Emprestimo emprestimo;
+
+    Emprestimo emprestimoRegistrado;
+
+    @BeforeEach
+    void setUp() throws LivroNotFoundException, ClienteNaoEncontrado, LivroNaoDisponivelException {
+        livro = getLivros().getFirst();
+        cliente = getClientes().getFirst();
+        emprestimo = new Emprestimo(cliente, livro, LocalDate.now(), LocalDate.now().plusDays(15));
+
+        when(emprestimoRepository.findById(anyLong())).thenReturn(Optional.of(emprestimo));
+        when(livroRepository.findById(anyLong())).thenReturn(Optional.of(livro));
+        when(clienteRepository.findById(anyLong())).thenReturn(Optional.of(cliente));
+
+        ReflectionTestUtils.setField(livro, "id", 1L);
+        ReflectionTestUtils.setField(cliente, "id", 1L);
+        ReflectionTestUtils.setField(emprestimo, "id", 1L);
+
+        // Um emprestimo deve ser registrado antes de testar quaisquer devoluções
+        emprestimoRegistrado = emprestimoService.registrarEmprestimo(
+                livro.getId(),
+                cliente.getId()
+        );
+
+        ReflectionTestUtils.setField(emprestimoRegistrado, "id", 1L);
+    }
+
+    @Test
+    void deveRegistrarDevolucaoSemAtrasoQuandoDadosCorretos() throws LivroNotFoundException, EmprestimoNotFoundException, ClienteNaoEncontrado, LivroNaoDisponivelException {
+        Emprestimo emprestimoDevolvido = emprestimoService.registrarDevolucao(
+                emprestimoRegistrado.getId(),
+                LocalDate.now().plusDays(1L)
+        );
+
+        // Verifica quantidade de exemplares foi alterada ao devolver livro
+        // 14 > 15
+        assertEquals(
+                livro.getExemplaresDisponiveisEmEstoque(),
+                emprestimoDevolvido.getLivro().getExemplaresDisponiveisEmEstoque()
+        );
+        assertFalse(emprestimoDevolvido.isAtivo());
+    }
+
+//    @Test
+//    void deveGerarMultaCasoDevolucaoComAtraso() {
+//    }
+
+//    @Test
+//    void deveLancarExcecaoCasoEmprestimoNaoExista() {
+//    }
+
+
+//    @Test
+//    void deveLancarExcecaoCasoLivroDevolvidoNaoExista() {
+//    }
+}
