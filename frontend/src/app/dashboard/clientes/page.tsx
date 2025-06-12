@@ -1,22 +1,17 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Cliente } from "@/models/cliente";
-import { clientes as clientesProviders } from "@/models/providers/clientes-provider";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 import CreateClientDialog from "./create-client/create-client-dialog";
 import DashboardTable from "./dashboard-clientes-table";
-import { useClients } from "@/service/client/get-client";
 import { useDashboardClientesLogic } from "./use-dashboard-clientes-logic";
 
 export default function Dashboard() {
-  const {
-    clientes,
-    handleAddClient,
-    handleGoToLivros,
-  } = useDashboardClientesLogic();
+  const { clientes, handleAddClient, handleGoToLivros } =
+    useDashboardClientesLogic();
+
+  const router = useRouter();
 
   return (
     <div className="p-10 justify-center min-h-screen flex items-center flex-col gap-3">
@@ -26,13 +21,20 @@ export default function Dashboard() {
 
       <CreateClientDialog onClientAdded={handleAddClient} />
 
-      <div>
+      <div className="space-x-2">
         <Button
           className="cursor-pointer"
           variant="outline"
           onClick={handleGoToLivros}
         >
           Gerenciar livros
+        </Button>
+        <Button
+          className="cursor-pointer"
+          variant="outline"
+          onClick={() => router.push("/dashboard/emprestimos")}
+        >
+          Gerenciar empréstimos
         </Button>
       </div>
 

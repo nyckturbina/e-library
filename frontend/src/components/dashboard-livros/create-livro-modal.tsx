@@ -35,7 +35,7 @@ export default function CreateLivroModal() {
           <CreateLivroForm onSuccess={() => setIsOpen(false)} />
 
           <DialogFooter>
-            <DialogClose>
+            <DialogClose asChild>
               <Button variant={"ghost"} type="button">
                 Cancelar
               </Button>
