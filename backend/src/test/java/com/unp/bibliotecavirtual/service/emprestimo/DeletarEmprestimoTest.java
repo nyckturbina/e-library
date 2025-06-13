@@ -36,7 +36,7 @@ public class DeletarEmprestimoTest {
 
         // Configura o mock para retornar o empréstimo quando buscar pelo ID
         when(emprestimoRepository.findById(anyLong())).thenReturn(Optional.of(emprestimo));
-        doNothing().when(emprestimoRepository).delete(any(Emprestimo.class));
+
     }
 
     @Test
@@ -51,7 +51,14 @@ public class DeletarEmprestimoTest {
         assertTrue(emprestimoBuscado.isEmpty());
     }
 
-//    @Test
-//    void deveLacarExcecaoCasoTenteDeletarEmprestimoInexistente() {
-//    }
+    @Test
+    void deveLacarExcecaoCasoTenteDeletarEmprestimoInexistente() {
+        when(emprestimoRepository.findById(anyLong())).thenReturn(Optional.empty());
+
+        assertThrows(EmprestimoNotFoundException.class, () -> {
+            emprestimoService.deletarEmprestimo(99L);
+        });
+
+    }
+
 }

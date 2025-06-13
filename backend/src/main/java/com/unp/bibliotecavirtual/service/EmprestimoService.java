@@ -11,6 +11,7 @@ import com.unp.bibliotecavirtual.model.Multa;
 import com.unp.bibliotecavirtual.repository.ClienteRepository;
 import com.unp.bibliotecavirtual.repository.EmprestimoRepository;
 import com.unp.bibliotecavirtual.repository.LivroRepository;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,6 +34,7 @@ public class EmprestimoService {
 
     @Autowired
     private ClienteRepository clienteRepository;
+    private @NonNull LocalDate dataDevolucaoReal;
 
     public Emprestimo registrarEmprestimo(Long livroId, Long clienteId) throws LivroNotFoundException, LivroNaoDisponivelException, ClienteNaoEncontrado {
         Livro livro = livroRepository.findById(livroId).orElseThrow(LivroNotFoundException::new);

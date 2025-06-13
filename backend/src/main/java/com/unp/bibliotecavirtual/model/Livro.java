@@ -75,4 +75,16 @@ public class Livro {
         this(titulo, autor, genero, isbn, sinopse, exemplaresDisponiveisEmEstoque, numeroPaginas, avaliacao);
         this.totalAvaliacoes = totalAvaliacoes;
     }
+
+//    public static void setId(long id) {
+//        Livro.id = id;
+//    }
+//
+//    public static void setExemplarForadeEstoque(int exemplarForadeEstoque) {
+//        Livro.exemplarForadeEstoque = exemplarForadeEstoque;
+//    }
+//
+//        return exemplarForadeEstoque;
+//    }
 }
+

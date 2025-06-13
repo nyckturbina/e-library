@@ -13,11 +13,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import static com.unp.bibliotecavirtual.service.emprestimo.utils.EmprestimoListProvider.getEmprestimosTeste;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
@@ -44,21 +47,44 @@ public class BuscarEmprestimoPorClienteTest {
                 getEmprestimosTeste().get(1)
         );
 
+//        when(clienteRepository.findById(anyLong())).thenReturn(Optional.of(cliente));
+//        when(emprestimoService.buscarEmprestimosPorCliente(anyLong())).thenReturn(emprestimos);
+    }
+
+    //
+    @Test
+    void buscaEmprestimosCasoClienteExista() throws ClienteNaoEncontrado {
         when(clienteRepository.findById(anyLong())).thenReturn(Optional.of(cliente));
+
         when(emprestimoService.buscarEmprestimosPorCliente(anyLong())).thenReturn(emprestimos);
+
+        List<Emprestimo> emprestimosBuscados = emprestimoService.buscarEmprestimosPorCliente(1L);
+
+        assertEquals(emprestimos, emprestimosBuscados);
+
     }
 
     @Test
-    void buscaEmprestimosCasoClienteExista() throws ClienteNaoEncontrado {
-        List<Emprestimo> emprestimosBuscados = emprestimoService.buscarEmprestimosPorCliente(1L);
-        assertEquals(emprestimos, emprestimosBuscados);
+    void deveLancarExcecaoCasoClienteNaoExista() {
+        when(clienteRepository.findById(anyLong())).thenReturn(Optional.empty());
+
+        assertThrows(ClienteNaoEncontrado.class, () -> {
+            emprestimoService.buscarEmprestimosPorCliente(99L);
+        });
     }
 
-//    @Test
-//    void deveLancarExcecaoCasoClienteNaoExista() {
-//    }
-//
-//    @Test
-//    void deveRetornarListaVaziaCasoClienteNaoPossuaEmprestimos() {
-//    }
+
+    @Test
+    void deveRetornarListaVaziaCasoClienteNaoPossuaEmprestimos() {
+        List<Emprestimo> listaVazia = new ArrayList<>();
+
+        when(clienteRepository.findById(anyLong()))
+                .thenReturn(Optional.of(cliente));
+        when(emprestimoRepository.findByCliente(any(Cliente.class))).thenReturn(listaVazia);
+
+        List<Emprestimo> emprestimosBuscados = emprestimoService.buscarEmprestimosPorCliente(1L);
+
+        assertEquals(emprestimosBuscados, listaVazia);
+
+    }
 }
