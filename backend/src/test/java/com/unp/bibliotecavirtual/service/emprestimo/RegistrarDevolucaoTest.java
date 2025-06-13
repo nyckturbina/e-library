@@ -11,7 +11,8 @@ import com.unp.bibliotecavirtual.repository.ClienteRepository;
 import com.unp.bibliotecavirtual.repository.EmprestimoRepository;
 import com.unp.bibliotecavirtual.repository.LivroRepository;
 import com.unp.bibliotecavirtual.service.EmprestimoService;
-import com.unp.bibliotecavirtual.service.emprestimo.utils.ClienteListProvider;
+import lombok.SneakyThrows;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,7 +25,6 @@ import java.time.LocalDate;
 import java.util.Optional;
 
 import static com.unp.bibliotecavirtual.service.emprestimo.utils.ClienteListProvider.getClientes;
-import static com.unp.bibliotecavirtual.service.emprestimo.utils.EmprestimoListProvider.getEmprestimosTeste;
 import static com.unp.bibliotecavirtual.service.emprestimo.utils.LivroListProvider.getLivros;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyLong;
@@ -80,8 +80,7 @@ class RegistrarDevolucaoTest {
     @Test
     void deveRegistrarDevolucaoSemAtrasoQuandoDadosCorretos() throws LivroNotFoundException, EmprestimoNotFoundException, ClienteNaoEncontrado, LivroNaoDisponivelException {
         Emprestimo emprestimoDevolvido = emprestimoService.registrarDevolucao(
-                emprestimoRegistrado.getId(),
-                LocalDate.now().plusDays(1L)
+                emprestimoRegistrado.getId()
         );
 
         // Verifica quantidade de exemplares foi alterada ao devolver livro
@@ -93,16 +92,38 @@ class RegistrarDevolucaoTest {
         assertFalse(emprestimoDevolvido.isAtivo());
     }
 
-//    @Test
-//    void deveGerarMultaCasoDevolucaoComAtraso() {
-//    }
+    @SneakyThrows
+    @Test
+    void deveGerarMultaCasoDevolucaoComAtraso() {
+        LocalDate dataDevolucaoComAtarso = emprestimoRegistrado.getDataDevolucao();
 
-//    @Test
-//    void deveLancarExcecaoCasoEmprestimoNaoExista() {
-//    }
+        Emprestimo devolvidoComMulta = emprestimoService.registrarDevolucao(
+                emprestimo.getId()
+        );
+        Assertions.assertNotNull(devolvidoComMulta.getMulta());
+        assertEquals(6.0, devolvidoComMulta.getMulta().getValorCalculado());
+        assertFalse(devolvidoComMulta.isAtivo());
+    }
+
+   @Test
+    void deveLancarExcecaoCasoEmprestimoNaoExista() {
+    when(emprestimoRepository.findById(anyLong())).thenReturn(Optional.empty());
+
+    assertThrows(EmprestimoNotFoundException.class, this::execute);
+   }
+
+    private void execute() throws LivroNotFoundException, EmprestimoNotFoundException {
+        emprestimoService.registrarDevolucao(99L );
+
+    }
 
 
-//    @Test
-//    void deveLancarExcecaoCasoLivroDevolvidoNaoExista() {
-//    }
+   @Test
+   void deveLancarExcecaoCasoLivroDevolvidoNaoExista() {
+       when(livroRepository.findById(anyLong())).thenReturn(Optional.empty());
+
+       assertThrows(LivroNotFoundException.class, () -> {
+               emprestimoService.registrarDevolucao(emprestimoRegistrado.getId());
+   });
+    }
 }
