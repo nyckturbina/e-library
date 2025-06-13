@@ -11,13 +11,13 @@ import com.unp.bibliotecavirtual.model.Multa;
 import com.unp.bibliotecavirtual.repository.ClienteRepository;
 import com.unp.bibliotecavirtual.repository.EmprestimoRepository;
 import com.unp.bibliotecavirtual.repository.LivroRepository;
+import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
-import java.util.Optional;
 
 import static com.unp.bibliotecavirtual.service.CalcularPrazoEmprestimo.calcularPrazo;
 
@@ -67,10 +67,10 @@ public class EmprestimoService {
         emprestimoRepository.delete(emprestimo);
     }
 
-    public Emprestimo registrarDevolucao(Long emprestimoId, LocalDate dataDevolucaoReal) throws EmprestimoNotFoundException, LivroNotFoundException {
-        // Empréstimo deve saber a data de devolução baseada no livro automaticamente
-        // Multa deve saber se calcular sozinha, ao receber os dias de atraso
-        // LocalDate devolucaoReal = LocalDate.now();
+    public Emprestimo registrarDevolucao(Long emprestimoId) throws EmprestimoNotFoundException, LivroNotFoundException {
+//         Empréstimo deve saber a data de devolução baseada no livro automaticamente
+//         Multa deve saber se calcular sozinha, ao receber os dias de atraso
+        LocalDate dataDevolucaoReal = LocalDate.now();
 
         Emprestimo emprestimo = emprestimoRepository
                 .findById(emprestimoId)
