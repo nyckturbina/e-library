@@ -39,7 +39,10 @@ class LivroServiceTest {
                 "Tecnologia",
                 "978-8550800653",
                 "Um livro sobre arquitetura de software",
-                10);
+                10,
+                1000,
+                10
+        );
 
         ReflectionTestUtils.setField(livroValido, "id", 1L);
 
@@ -47,7 +50,11 @@ class LivroServiceTest {
                 "Domain-Driven Design - Edição Especial",
                 livroValido.getAutor(),
                 livroValido.getGenero(),
-                livroValido.getIsbn()
+                livroValido.getIsbn(),
+                livroValido.getSinopse(),
+                livroValido.getExemplaresDisponiveisEmEstoque(),
+                livroValido.getNumeroPaginas(),
+                livroValido.getAvaliacao()
         );
         ReflectionTestUtils.setField(livroAtualizado, "id", 1L);
     }

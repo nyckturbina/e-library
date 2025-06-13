@@ -40,12 +40,18 @@ public class LivroService {
 
         Livro storedBook = existente.get();
 
+        // Devido alguns livros terem sido cadastrado com esses valores vazios
+        storedBook.setAvaliacao(Optional.ofNullable(storedBook.getAvaliacao()).orElse(0));
+        storedBook.setNumeroPaginas(Optional.ofNullable(storedBook.getNumeroPaginas()).orElse(0));
+
         storedBook.setTitulo(livroAtualizado.getTitulo());
         storedBook.setAutor(livroAtualizado.getAutor());
         storedBook.setGenero(livroAtualizado.getGenero());
         storedBook.setIsbn(livroAtualizado.getIsbn());
         storedBook.setSinopse(livroAtualizado.getSinopse());
         storedBook.setExemplaresDisponiveisEmEstoque(livroAtualizado.getExemplaresDisponiveisEmEstoque());
+        storedBook.setNumeroPaginas(livroAtualizado.getNumeroPaginas());
+        storedBook.setAvaliacao(storedBook.getAvaliacao() + livroAtualizado.getAvaliacao());
 
         return livroRepository.save(storedBook);
     }

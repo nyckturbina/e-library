@@ -27,6 +27,15 @@ public record LivroRequestDTO(
         @NotNull(message = "A quantidade é obrigatória")
         @PositiveOrZero(message = "A quantidade não pode ser negativa")
         @Max(value = 1000, message = "A quantidade máxima permitida é 1000")
-        Integer quantidade
+        Integer quantidade,
+
+        @NotNull(message = "O número de páginas é obrigatório")
+        @PositiveOrZero(message = "O número de páginas não pode ser negativo")
+        @Max(value = 1_000_000, message = "O número de páginas máxima permitido é 1.000.000")
+        Integer numeroPaginas,
+
+        @PositiveOrZero(message = "A avaliação não pode ser negativa")
+        @Max(value = 10, message = "A avaliação máxima permitida é 10")
+        Integer avaliacao
 ) {
 }

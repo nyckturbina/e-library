@@ -2,6 +2,7 @@ package com.unp.bibliotecavirtual.model;
 
 import java.time.LocalDate;
 
+import com.unp.bibliotecavirtual.model.enums.StatusEmprestimo;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -10,6 +11,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.*;
+
+import static com.unp.bibliotecavirtual.model.enums.StatusEmprestimo.ATIVO;
 
 @Entity
 @Data
@@ -40,6 +43,5 @@ public class Emprestimo {
     @Embedded
     private Multa multa;
 
-    @NonNull
-    private boolean isAtivo = true;
+    private StatusEmprestimo status = ATIVO;
 }

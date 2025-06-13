@@ -12,7 +12,9 @@ public class LivroMapperDTO {
                 request.genero(),
                 request.isbn(),
                 request.sinopse(),
-                request.quantidade()
+                request.quantidade(),
+                request.numeroPaginas(),
+                request.avaliacao()
         );
     }
 
@@ -24,7 +26,9 @@ public class LivroMapperDTO {
                 livro.getGenero(),
                 livro.getIsbn(),
                 livro.getSinopse(),
-                livro.getExemplaresDisponiveisEmEstoque()
+                livro.getExemplaresDisponiveisEmEstoque(),
+                livro.getNumeroPaginas(),
+                livro.getAvaliacao()
         );
     }
 }

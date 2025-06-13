@@ -8,6 +8,7 @@ import com.unp.bibliotecavirtual.model.Cliente;
 import com.unp.bibliotecavirtual.model.Emprestimo;
 import com.unp.bibliotecavirtual.model.Livro;
 import com.unp.bibliotecavirtual.model.Multa;
+import com.unp.bibliotecavirtual.model.enums.StatusEmprestimo;
 import com.unp.bibliotecavirtual.repository.ClienteRepository;
 import com.unp.bibliotecavirtual.repository.EmprestimoRepository;
 import com.unp.bibliotecavirtual.repository.LivroRepository;
@@ -19,7 +20,10 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
+import static com.unp.bibliotecavirtual.model.enums.StatusEmprestimo.ATRASADO;
+import static com.unp.bibliotecavirtual.model.enums.StatusEmprestimo.DEVOLVIDO;
 import static com.unp.bibliotecavirtual.service.CalcularPrazoEmprestimo.calcularPrazo;
+import static java.time.temporal.ChronoUnit.DAYS;
 
 @Service
 public class EmprestimoService {
@@ -85,16 +89,17 @@ public class EmprestimoService {
 
         double multa = 0;
         if (dataDevolucaoReal.isAfter(dataDevolucaoPrevista)) {
-            long diasAtraso = ChronoUnit.DAYS.between(dataDevolucaoPrevista, dataDevolucaoReal);
+            long diasAtraso = DAYS.between(dataDevolucaoPrevista, dataDevolucaoReal);
             multa = diasAtraso * 2.0;
             emprestimo.setMulta(new Multa(multa));
+            emprestimo.setStatus(ATRASADO);
         }
 
         livro.setExemplaresDisponiveisEmEstoque(livro.getExemplaresDisponiveisEmEstoque() + 1);
         livroRepository.save(livro);
 
         emprestimo.setDataDevolucao(dataDevolucaoReal);
-        emprestimo.setAtivo(false);
+        emprestimo.setStatus(DEVOLVIDO);
         emprestimoRepository.save(emprestimo);
 
         return emprestimo;

@@ -7,6 +7,7 @@ import com.unp.bibliotecavirtual.exceptions.LivroNotFoundException;
 import com.unp.bibliotecavirtual.model.Cliente;
 import com.unp.bibliotecavirtual.model.Emprestimo;
 import com.unp.bibliotecavirtual.model.Livro;
+import com.unp.bibliotecavirtual.model.enums.StatusEmprestimo;
 import com.unp.bibliotecavirtual.repository.ClienteRepository;
 import com.unp.bibliotecavirtual.repository.EmprestimoRepository;
 import com.unp.bibliotecavirtual.repository.LivroRepository;
@@ -87,7 +88,8 @@ class RegistrarDevolucaoTest {
                 livro.getExemplaresDisponiveisEmEstoque(),
                 emprestimoDevolvido.getLivro().getExemplaresDisponiveisEmEstoque()
         );
-        assertFalse(emprestimoDevolvido.isAtivo());
+        assertEquals(StatusEmprestimo.DEVOLVIDO, emprestimoDevolvido.getStatus());
+        assertEquals(emprestimoDevolvido.getStatus(), emprestimo.getStatus());
     }
 
     @Test
@@ -101,7 +103,8 @@ class RegistrarDevolucaoTest {
         );
         assertNotNull(devolvidoComMulta.getMulta());
         assertEquals(6.0, devolvidoComMulta.getMulta().getValorCalculado());
-        assertFalse(devolvidoComMulta.isAtivo());
+        assertEquals(emprestimo.getStatus(), devolvidoComMulta.getStatus());
+        assertEquals(StatusEmprestimo.DEVOLVIDO, devolvidoComMulta.getStatus());
     }
 
     @Test
