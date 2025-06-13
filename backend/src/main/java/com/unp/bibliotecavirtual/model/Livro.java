@@ -67,4 +67,16 @@ public class Livro {
         this.numeroPaginas = numeroPaginas;
         this.avaliacao = avaliacao;
     }
+
+//    public static void setId(long id) {
+//        Livro.id = id;
+//    }
+//
+//    public static void setExemplarForadeEstoque(int exemplarForadeEstoque) {
+//        Livro.exemplarForadeEstoque = exemplarForadeEstoque;
+//    }
+//
+//        return exemplarForadeEstoque;
+//    }
 }
+
