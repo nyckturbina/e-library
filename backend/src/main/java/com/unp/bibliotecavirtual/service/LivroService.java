@@ -3,6 +3,7 @@ package com.unp.bibliotecavirtual.service;
 import java.util.List;
 import java.util.Optional;
 
+import com.unp.bibliotecavirtual.exceptions.LivroNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +27,11 @@ public class LivroService {
     public Livro buscarPorId(Long id) {
         return livroRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Livro não encontrado com ID: " + id));
+    }
+
+    public Livro buscarPorIsbn(String isbn) throws LivroNotFoundException {
+        return livroRepository.findByIsbn(isbn)
+                .orElseThrow(LivroNotFoundException::new);
     }
 
     // READ (listar todos)
@@ -66,4 +72,5 @@ public class LivroService {
             throw new RuntimeException("Livro não encontrado para exclusão");
         }
     }
+
 }

@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.unp.bibliotecavirtual.dto.mapper.ClienteMapperDTO.toResponse;
+import static com.unp.bibliotecavirtual.dto.mapper.ClienteMapperDTO.toSafeResponse;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
@@ -54,11 +55,21 @@ public class ClienteController {
         }
     }
 
+    @GetMapping("/cpf/{cpf}")
+    public ResponseEntity<?> fetchClientByCPF(@PathVariable String cpf) {
+        try {
+            Cliente usuario = clienteService.buscarPorCPF(cpf);
+            return ResponseEntity.ok(toSafeResponse(usuario));
+        } catch (ClienteNaoEncontrado ex) {
+            return ResponseEntity.status(NOT_FOUND).body(ex.getMessage());
+        }
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<?> buscarClienteID(@PathVariable Long id) {
         try {
             Cliente usuario = clienteService.buscarPorId(id);
-            return ResponseEntity.ok(ClienteMapperDTO.toResponse(usuario));
+            return ResponseEntity.ok(toResponse(usuario));
         } catch (ClienteNaoEncontrado ex) {
             return ResponseEntity.status(NOT_FOUND).body(ex.getMessage());
         }
@@ -75,7 +86,7 @@ public class ClienteController {
     public ResponseEntity<ClienteResponseDTO> editar(@PathVariable Long id, @RequestBody @Valid ClienteRequestDTO usuarioRequest) {
         Cliente usuarioAtualizado = ClienteMapperDTO.toEntity(usuarioRequest);
         Cliente novoCliente = clienteService.editar(id, usuarioAtualizado);
-        return ResponseEntity.ok(ClienteMapperDTO.toResponse(novoCliente));
+        return ResponseEntity.ok(toResponse(novoCliente));
     }
 
     @DeleteMapping("/{id}")

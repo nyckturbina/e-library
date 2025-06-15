@@ -9,6 +9,7 @@ import com.unp.bibliotecavirtual.exceptions.LivroNotFoundException;
 import com.unp.bibliotecavirtual.model.Emprestimo;
 import com.unp.bibliotecavirtual.service.EmprestimoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,7 +32,7 @@ public class EmprestimoController {
             Emprestimo emprestimo = emprestimoService.registrarEmprestimo(request.livroId(), request.clienteId());
             EmprestimoResponseDTO response = toResponse(emprestimo);
             return ResponseEntity.ok(response);
-        } catch (LivroNaoDisponivelException | LivroNotFoundException | ClienteNaoEncontrado exception) {
+        } catch (LivroNotFoundException | ClienteNaoEncontrado | LivroNaoDisponivelException exception) {
             return ResponseEntity.status(NOT_FOUND).body(exception.getMessage());
         }
     }

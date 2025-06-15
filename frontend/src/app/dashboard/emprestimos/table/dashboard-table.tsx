@@ -10,18 +10,31 @@ import {
   TableRow
 } from "@/components/ui/table";
 import { loansProvider } from "@/models/providers/loans-provider";
+import { useGetAllLoans } from "@/service/loan/get-loans";
 import { Trash2 } from "lucide-react";
 import { useEffect } from "react";
-import useTable from ".";
+import useTable, { LoanProviderType } from ".";
 import RateBookDialog from "./rate-book/dialog";
 import ReturnBookDialog from "./return-book/return-book";
 
 export default function DashboardTable() {
-  const { getLoans, setLoans } = useTable();
+  const { getLoans, setLoans, loanProviderType, setLoanProviderType } =
+    useTable();
+  const { data, isLoading, error } = useGetAllLoans();
 
   useEffect(() => {
+    if (data) {
+      setLoans(data);
+      setLoanProviderType(LoanProviderType.BACKEND);
+    }
+  }, [data]);
+
+  if (isLoading) return <div>Carregando empréstimos...</div>;
+
+  if (error) {
+    console.error("Erro ao buscar os dados");
     setLoans(loansProvider);
-  }, []);
+  }
 
   return (
     <div>
@@ -42,9 +55,9 @@ export default function DashboardTable() {
         <TableBody>
           {getLoans().map(loan => (
             <TableRow key={loan.id}>
-              <TableCell>{loan.client.name}</TableCell>
-              <TableCell>{loan.client.cpf}</TableCell>
-              <TableCell>{loan.book.title}</TableCell>
+              <TableCell>{loan.clienteInfo.nome}</TableCell>
+              <TableCell>{loan.clienteInfo.cpf}</TableCell>
+              <TableCell>{loan.bookInfo.titulo}</TableCell>
               <TableCell>
                 {loan.dataEmprestimo.toLocaleDateString("pt-BR")}
               </TableCell>
@@ -52,7 +65,7 @@ export default function DashboardTable() {
                 {loan.dataDevolucao?.toLocaleDateString("pt-BR")}
               </TableCell>
               <TableCell>
-                {loan.multa?.toLocaleString("pt-BR", {
+                {loan.valorMulta?.toLocaleString("pt-BR", {
                   style: "currency",
                   currency: "BRL"
                 })}
@@ -60,16 +73,16 @@ export default function DashboardTable() {
               <TableCell>
                 <span
                   className={
-                    loan.status === "Ativo"
+                    loan.statusEmprestimo === "Ativo".toUpperCase()
                       ? "px-2 py-1 rounded text-white bg-green-300"
-                      : loan.status === "Devolvido"
+                      : loan.statusEmprestimo === "Devolvido".toUpperCase()
                       ? "px-2 py-1 rounded text-white bg-blue-300"
-                      : loan.status === "Atrasado"
+                      : loan.statusEmprestimo === "Atrasado".toUpperCase()
                       ? "px-2 py-1 rounded text-white bg-red-300"
                       : "px-2 py-1 rounded bg-gray-200"
                   }
                 >
-                  {loan.status}
+                  {loan.statusEmprestimo}
                 </span>
               </TableCell>
               <TableCell>
@@ -80,7 +93,11 @@ export default function DashboardTable() {
                   >
                     <Trash2 className="text-slate-400" size={18} />
                   </button>
-                  <ReturnBookDialog loan={loan} setLoans={setLoans} />
+                  <ReturnBookDialog
+                    loan={loan}
+                    setLoans={setLoans}
+                    loanProviderType={loanProviderType}
+                  />
                 </div>
               </TableCell>
             </TableRow>

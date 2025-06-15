@@ -30,9 +30,14 @@ public class ClienteService {
         return clienteRepository.findAll();
     }
 
+    public Cliente buscarPorCPF(String cpf) throws ClienteNaoEncontrado {
+        return clienteRepository.findByCpf(cpf)
+                .orElseThrow(ClienteNaoEncontrado::new);
+    }
+
     public Cliente buscarPorId(Long id) throws ClienteNaoEncontrado {
         return clienteRepository.findById(id)
-                .orElseThrow(() -> new ClienteNaoEncontrado());
+                .orElseThrow(ClienteNaoEncontrado::new);
     }
 
     public Cliente editar(Long id, Cliente clienteAtualizado) throws ClienteNaoEncontrado {

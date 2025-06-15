@@ -1,13 +1,11 @@
 "use client";
-import { Alert, AlertTitle } from "@/components/ui/alert";
 
 import CreateLivroModal from "@/components/dashboard-livros/create-livro-modal";
-import { CheckCircle2Icon } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import DashboardTable from "./dashboard-table";
-import { Button } from "@/components/ui/button";
 
 export default function Dashboard() {
   const router = useRouter();
@@ -25,11 +23,6 @@ export default function Dashboard() {
   return (
     <div className="p-10 justify-center min-h-screen flex items-center flex-col gap-3">
       <h1 className="text-2xl">Gerenciamento de livros</h1>
-
-      <Alert variant={"default"} className="max-w-sm">
-        <CheckCircle2Icon />
-        <AlertTitle>Logado com sucesso</AlertTitle>
-      </Alert>
 
       <DashboardTable />
 

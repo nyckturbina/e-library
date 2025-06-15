@@ -1,8 +1,16 @@
 import { Loan } from "@/models/loan";
 import { useState } from "react";
 
+export enum LoanProviderType {
+  BACKEND = "Backend",
+  MOCK = "Mock"
+}
+
 export default function useTable() {
   const [loans, setLoansState] = useState<Loan[]>([]);
+  const [loanProviderType, setLoanProviderType] = useState<LoanProviderType>(
+    LoanProviderType.MOCK
+  );
 
   const getLoans = () => {
     return loans;
@@ -12,5 +20,5 @@ export default function useTable() {
     setLoansState(newLoans);
   };
 
-  return { getLoans, setLoans };
+  return { getLoans, setLoans, loanProviderType, setLoanProviderType };
 }

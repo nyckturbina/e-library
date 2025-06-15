@@ -24,7 +24,7 @@ export default function Gender() {
     <div className="grid gap-2 justify-start">
       <Label htmlFor="genero">Genero</Label>
       <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger>
+        <PopoverTrigger asChild>
           <Button
             variant="outline"
             role="combobox"

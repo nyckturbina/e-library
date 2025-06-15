@@ -13,19 +13,26 @@ import { Loan, StatusEmprestimo } from "@/models/loan";
 import { CheckCircle } from "lucide-react";
 import { useState } from "react";
 import useReturnBook from ".";
+import { LoanProviderType } from "..";
 
 interface ReturnBookDialogProps {
   loan: Loan;
   setLoans: (updater: any) => void;
+  loanProviderType: LoanProviderType;
 }
 
-export default function ReturnBookDialog({ loan, setLoans }: ReturnBookDialogProps) {
+export default function ReturnBookDialog({
+  loan,
+  setLoans,
+  loanProviderType
+}: ReturnBookDialogProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const { handleConfirm, hideReturnButton } = useReturnBook({
     setIsOpenDialog: setIsOpen,
     loan: loan,
-    setLoans: setLoans
+    setLoans: setLoans,
+    loanProviderType
   });
 
   if (hideReturnButton()) return;
@@ -45,8 +52,8 @@ export default function ReturnBookDialog({ loan, setLoans }: ReturnBookDialogPro
           <DialogHeader>
             <DialogTitle>Confirmar Devolução</DialogTitle>
             <DialogDescription>
-              Deseja confirmar devolução do livro <b>{loan.book.title}</b>{" "}
-              emprestado ao cliente <b>{loan.client.name}</b>?
+              Deseja confirmar devolução do livro <b>{loan.bookInfo.titulo}</b>{" "}
+              emprestado ao cliente <b>{loan.clienteInfo.nome}</b>?
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>

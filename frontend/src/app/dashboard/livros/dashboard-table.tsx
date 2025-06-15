@@ -13,7 +13,7 @@ import { books as booksProvided } from "@/models/providers/books-provider";
 import DeleteBook from "./delete-book";
 import EditBook from "./edit-book-modal";
 import { useState } from "react";
-import { LendBookDialog } from "./lend-book-dialog";
+import { LendBookDialog } from "./lend-book/dialog";
 
 export default function DashboardTable() {
   let books: Book[] = [];
@@ -34,7 +34,7 @@ export default function DashboardTable() {
     books = booksProvided;
   }
 
-    const handleDoubleClick = (book: Book) => {
+  const handleDoubleClick = (book: Book) => {
     setSelectedBook(book);
     setIsLendDialogOpen(true);
   };
@@ -51,20 +51,27 @@ export default function DashboardTable() {
           <TableRow>
             <TableHead className="w-[200px]">Nome</TableHead>
             <TableHead>Autor</TableHead>
+            <TableHead>ISBN</TableHead>
             <TableHead>Avaliação</TableHead>
+            <TableHead>Estoque</TableHead>
             <TableHead className="text-right">Ações</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
-          {books.map((book) => (
-            <TableRow key={book.id}
-            onDoubleClick={() => handleDoubleClick(book)}
-            className="cursor-pointer hover:bg-muted/50 transition-colors">
+          {books.map(book => (
+            <TableRow
+              key={book.id}
+              onDoubleClick={() => handleDoubleClick(book)}
+              className="cursor-pointer hover:bg-muted/50 transition-colors"
+            >
               <TableCell>{book.titulo}</TableCell>
               <TableCell>{book.autor}</TableCell>
+              <TableCell>{book.isbn}</TableCell>
               <TableCell>{book.avaliacao}</TableCell>
+              <TableCell>{book.quantidadeTotal}</TableCell>
               <TableCell className="text-right">
-                <div className="flex">
+                <div className="flex items-center">
+                  <LendBookDialog book={book} />
                   <EditBook book={book} />
                   <DeleteBook book={book} />
                 </div>
@@ -73,13 +80,6 @@ export default function DashboardTable() {
           ))}
         </TableBody>
       </Table>
-
-      <LendBookDialog
-        isOpen={isLendDialogOpen}
-        onOpenChange={setIsLendDialogOpen}
-        book={selectedBook}
-        onConfirmLend={handleConfirmLend}
-      />
     </div>
   );
 }

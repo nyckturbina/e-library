@@ -11,8 +11,8 @@ import {
 } from "@/components/ui/dialog";
 import { Book } from "@/models/book";
 import { EditIcon } from "lucide-react";
-import EditBookForm from "./edit-book-form";
 import { useState } from "react";
+import EditBookForm from "./edit-book-form";
 
 interface EditBookProps {
   book: Book;
@@ -22,36 +22,34 @@ export default function EditBook({ book }: EditBookProps) {
   const [open, setOpen] = useState(false);
 
   return (
-    <div>
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger>
-          <button className="mr-2 text-slate-800 cursor-pointer">
-            <EditIcon />
-          </button>
-        </DialogTrigger>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <button title="Editar livro" className="text-slate-400 cursor-pointer">
+          <EditIcon />
+        </button>
+      </DialogTrigger>
 
-        <DialogContent className="overflow-y-auto max-h-[90vh]">
-          <DialogHeader>
-            <DialogTitle>Editar livro</DialogTitle>
-            <DialogDescription>
-              Insira os dados a serem editados nos campos abaixo.
-            </DialogDescription>
-          </DialogHeader>
+      <DialogContent className="overflow-y-auto max-h-[90vh]">
+        <DialogHeader>
+          <DialogTitle>Editar livro</DialogTitle>
+          <DialogDescription>
+            Insira os dados a serem editados nos campos abaixo.
+          </DialogDescription>
+        </DialogHeader>
 
-          <EditBookForm book={book} onSuccess={() => setOpen(false)} />
+        <EditBookForm book={book} onSuccess={() => setOpen(false)} />
 
-          <DialogFooter>
-            <DialogClose>
-              <Button variant={"ghost"} type="button">
-                Cancelar
-              </Button>
-            </DialogClose>
-            <Button type="submit" form="create-livro-form">
-              Salvar
+        <DialogFooter>
+          <DialogClose asChild>
+            <Button variant={"ghost"} type="button">
+              Cancelar
             </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-    </div>
+          </DialogClose>
+          <Button type="submit" form="create-livro-form">
+            Salvar
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }

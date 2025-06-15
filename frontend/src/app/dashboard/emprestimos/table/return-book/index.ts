@@ -1,31 +1,43 @@
 import useRating from "@/hooks/use-rating";
 import { Loan, StatusEmprestimo } from "@/models/loan";
+import { LoanProviderType } from "..";
 
 interface useReturnBookProps {
   setIsOpenDialog: (open: boolean) => void;
   loan: Loan;
   setLoans: (updater: any) => void;
+  loanProviderType: LoanProviderType;
 }
 
 export default function useReturnBook({
   setIsOpenDialog,
   loan,
-  setLoans
+  setLoans,
+  loanProviderType
 }: useReturnBookProps) {
   const { openRatingDialog } = useRating();
 
   const handleConfirm = () => {
-    setLoans((prevLoans: Loan[]) =>
-      prevLoans.map(l =>
-        l.id === loan.id ? { ...l, status: StatusEmprestimo.DEVOLVIDO } : l
-      )
-    );
+    if (loanProviderType === LoanProviderType.MOCK) {
+      setLoans((prevLoans: Loan[]) =>
+        prevLoans.map(l =>
+          l.id === loan.id
+            ? { ...l, statusEmprestimo: StatusEmprestimo.DEVOLVIDO }
+            : l
+        )
+      );
+    } 
+
+    if (loanProviderType === LoanProviderType.BACKEND) {
+      
+    }
+
     setIsOpenDialog(false);
-    openRatingDialog(loan.id.toString(), loan.book.title);
+    openRatingDialog(loan.id.toString(), loan.bookInfo.titulo);
   };
 
   const hideReturnButton = () => {
-    if (loan.status === StatusEmprestimo.DEVOLVIDO) {
+    if (loan.statusEmprestimo === StatusEmprestimo.DEVOLVIDO) {
       return true;
     }
   };

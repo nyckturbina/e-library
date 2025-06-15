@@ -1,4 +1,3 @@
-import { deleteBook } from "@/service/livro-consumer";
 import { Button } from "@/components/ui/button";
 import {
   DialogClose,
@@ -10,6 +9,7 @@ import {
   DialogTrigger
 } from "@/components/ui/dialog";
 import { Book } from "@/models/book";
+import { deleteBook } from "@/service/livro-consumer";
 import { Dialog } from "@radix-ui/react-dialog";
 import { Trash2Icon } from "lucide-react";
 
@@ -24,45 +24,39 @@ export default function DeleteBook({ book }: DeleteBookProps) {
   };
 
   return (
-    <div>
-      <Dialog>
-        <DialogTrigger>
-          <button className="text-red-900 cursor-pointer">
-            <Trash2Icon />
-          </button>
-        </DialogTrigger>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Excluir Livro</DialogTitle>
-            <DialogDescription>
-              Tem certeza que gostaria de excluir o livro{" "}
-              <span className="font-bold">{`"${book.titulo}"`}</span>?
-            </DialogDescription>
-          </DialogHeader>
-          <DialogFooter>
-            <DialogClose>
-              <Button
-                className="cursor-pointer"
-                variant={"ghost"}
-                type="button"
-              >
-                Cancelar
-              </Button>
-            </DialogClose>
-            <DialogClose asChild>
-              <Button
-                className="cursor-pointer"
-                type="button"
-                variant={"destructive"}
-                form="create-livro-form"
-                onClick={handleDelete}
-              >
-                Excluir
-              </Button>
-            </DialogClose>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
-    </div>
+    <Dialog>
+      <DialogTrigger asChild>
+        <button title="Excluir livro" className="text-red-300 cursor-pointer">
+          <Trash2Icon />
+        </button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Excluir Livro</DialogTitle>
+          <DialogDescription>
+            Tem certeza que gostaria de excluir o livro{" "}
+            <span className="font-bold">{`"${book.titulo}"`}</span>?
+          </DialogDescription>
+        </DialogHeader>
+        <DialogFooter>
+          <DialogClose asChild>
+            <Button className="cursor-pointer" variant={"ghost"} type="button">
+              Cancelar
+            </Button>
+          </DialogClose>
+          <DialogClose asChild>
+            <Button
+              className="cursor-pointer"
+              type="button"
+              variant={"destructive"}
+              form="create-livro-form"
+              onClick={handleDelete}
+            >
+              Excluir
+            </Button>
+          </DialogClose>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }

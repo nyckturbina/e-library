@@ -21,7 +21,7 @@ export default function CreateLivroModal() {
     <div>
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogTrigger asChild>
-          <Button className="cursor-pointer">Cadastrar cliente</Button>
+          <Button className="cursor-pointer">Cadastrar livro</Button>
         </DialogTrigger>
 
         <DialogContent className="overflow-y-auto max-h-[90vh]">

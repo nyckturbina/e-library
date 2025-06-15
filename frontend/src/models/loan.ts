@@ -1,12 +1,12 @@
-interface ClientDetails {
+interface ClientInfo {
   id: number;
-  name: string;
+  nome: string;
   cpf: string;
 }
 
-interface BookDetails {
+interface BookInfo {
   id: number;
-  title: string;
+  titulo: string;
   isbn: string;
 }
 
@@ -18,10 +18,10 @@ export enum StatusEmprestimo {
 
 export interface Loan {
   id: number;
-  client: ClientDetails;
-  book: BookDetails;
+  clienteInfo: ClientInfo;
+  bookInfo: BookInfo;
   dataEmprestimo: Date;
   dataDevolucao?: Date;
-  multa?: number;
-  status: StatusEmprestimo;
+  valorMulta?: number;
+  statusEmprestimo: StatusEmprestimo;
 }

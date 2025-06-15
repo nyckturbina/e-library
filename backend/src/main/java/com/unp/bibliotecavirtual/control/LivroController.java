@@ -3,6 +3,7 @@ package com.unp.bibliotecavirtual.control;
 import com.unp.bibliotecavirtual.dto.mapper.LivroMapperDTO;
 import com.unp.bibliotecavirtual.dto.request.LivroRequestDTO;
 import com.unp.bibliotecavirtual.dto.response.LivroResponseDTO;
+import com.unp.bibliotecavirtual.exceptions.LivroNotFoundException;
 import com.unp.bibliotecavirtual.model.Livro;
 import com.unp.bibliotecavirtual.service.LivroService;
 import jakarta.validation.Valid;
@@ -35,7 +36,18 @@ public class LivroController {
     public ResponseEntity<LivroResponseDTO> buscarPorId(@PathVariable Long id) {
         Livro livro = service.buscarPorId(id);
         LivroResponseDTO response = toResponse(livro);
-        return ResponseEntity.status(FOUND).body(response);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/isbn/{isbn}")
+    public ResponseEntity<?> buscarPorIsbn(@PathVariable String isbn) {
+        try {
+            Livro livro = service.buscarPorIsbn(isbn);
+            LivroResponseDTO response = toResponse(livro);
+            return ResponseEntity.ok(response);
+        } catch (LivroNotFoundException e) {
+            return ResponseEntity.status(NOT_FOUND).body(e.getMessage());
+        }
     }
 
     @GetMapping
