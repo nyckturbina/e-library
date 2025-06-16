@@ -52,6 +52,13 @@ public class BuscarEmprestimoPorClienteTest {
     void buscaEmprestimosCasoClienteExista() throws ClienteNaoEncontrado {
         List<Emprestimo> emprestimosBuscados = emprestimoService.buscarEmprestimosPorCliente(1L);
         assertEquals(emprestimos, emprestimosBuscados);
+    @Test
+    void deveLancarExcecaoCasoClienteNaoExista() {
+        when(clienteRepository.findById(anyLong())).thenReturn(Optional.empty());
+
+        assertThrows(ClienteNaoEncontrado.class, () -> {
+            emprestimoService.buscarEmprestimosPorCliente(99L);
+        });
     }
 
 //    @Test
