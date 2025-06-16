@@ -49,10 +49,18 @@ public class BuscarEmprestimoPorClienteTest {
 //        when(emprestimoService.buscarEmprestimosPorCliente(anyLong())).thenReturn(emprestimos);
     }
 //
-//    @Test
-//    void buscaEmprestimosCasoClienteExista() throws ClienteNaoEncontrado {
-//        List<Emprestimo> emprestimosBuscados = emprestimoService.buscarEmprestimosPorCliente(1L);
-//        assertEquals(emprestimos, emprestimosBuscados);
+    @Test
+    void buscaEmprestimosCasoClienteExista() throws ClienteNaoEncontrado {
+        when(clienteRepository.findById(anyLong())).thenReturn(Optional.of(cliente));
+
+        when(emprestimoService.buscarEmprestimosPorCliente(anyLong())).thenReturn(emprestimos);
+
+        List<Emprestimo> emprestimosBuscados = emprestimoService.buscarEmprestimosPorCliente(1L);
+
+        assertEquals(emprestimos, emprestimosBuscados);
+
+    }
+
     @Test
     void deveLancarExcecaoCasoClienteNaoExista() {
         when(clienteRepository.findById(anyLong())).thenReturn(Optional.empty());
