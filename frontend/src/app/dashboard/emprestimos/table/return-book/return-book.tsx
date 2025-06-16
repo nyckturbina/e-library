@@ -28,14 +28,19 @@ export default function ReturnBookDialog({
 }: ReturnBookDialogProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const { handleConfirm, hideReturnButton } = useReturnBook({
+  const { handleConfirm, hideReturnButton, isPending, error } = useReturnBook({
     setIsOpenDialog: setIsOpen,
     loan: loan,
     setLoans: setLoans,
     loanProviderType
   });
 
-  if (hideReturnButton()) return;
+  // Se o status for "devolvido", não renderiza o botão de devolver
+  if (hideReturnButton()) return null;
+
+  if (error) {
+    alert("Erro ao devolver livro");
+  }
 
   return (
     <div>

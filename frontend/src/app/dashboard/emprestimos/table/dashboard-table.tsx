@@ -100,11 +100,11 @@ export default function DashboardTable() {
                   />
                 </div>
               </TableCell>
+              <RateBookDialog bookId={loan.bookInfo.id} />
             </TableRow>
           ))}
         </TableBody>
       </Table>
-      <RateBookDialog />
     </div>
   );
 }

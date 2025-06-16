@@ -39,7 +39,10 @@ public class Livro {
     private Integer numeroPaginas;
 
     @Setter
-    private Integer avaliacao;
+    private Double avaliacao;
+
+    @Setter
+    private Integer totalAvaliacoes = 0;
 
     public Livro(String titulo, String autor, String genero, String isbn) {
         this.titulo = titulo;
@@ -54,17 +57,22 @@ public class Livro {
         this.exemplaresDisponiveisEmEstoque = exemplaresDisponiveisEmEstoque;
     }
 
-    public Livro(String titulo, String autor, String genero, String isbn, String sinopse, Integer exemplaresDisponiveisEmEstoque, Integer avaliacao) {
+    public Livro(String titulo, String autor, String genero, String isbn, String sinopse, Integer exemplaresDisponiveisEmEstoque, Long avaliacao) {
         this(titulo, autor, genero, isbn);
         this.sinopse = sinopse;
         this.exemplaresDisponiveisEmEstoque = exemplaresDisponiveisEmEstoque;
-        this.avaliacao = avaliacao;
+        this.avaliacao = avaliacao.doubleValue();
     }
 
-    public Livro(String titulo, String autor, String genero, String isbn, String sinopse, Integer exemplaresDisponiveisEmEstoque, Integer numeroPaginas, Integer avaliacao) {
+    public Livro(String titulo, String autor, String genero, String isbn, String sinopse, Integer exemplaresDisponiveisEmEstoque, Integer numeroPaginas, Long avaliacao) {
         this(titulo, autor, genero, isbn, sinopse, exemplaresDisponiveisEmEstoque);
         this.exemplaresDisponiveisEmEstoque = exemplaresDisponiveisEmEstoque;
         this.numeroPaginas = numeroPaginas;
-        this.avaliacao = avaliacao;
+        this.avaliacao = avaliacao.doubleValue();
+    }
+
+    public Livro(String titulo, String autor, String genero, String isbn, String sinopse, Integer exemplaresDisponiveisEmEstoque, Integer numeroPaginas, Long avaliacao, Integer totalAvaliacoes) {
+        this(titulo, autor, genero, isbn, sinopse, exemplaresDisponiveisEmEstoque, numeroPaginas, avaliacao);
+        this.totalAvaliacoes = totalAvaliacoes;
     }
 }

@@ -36,6 +36,6 @@ public record LivroRequestDTO(
 
         @PositiveOrZero(message = "A avaliação não pode ser negativa")
         @Max(value = 10, message = "A avaliação máxima permitida é 10")
-        Integer avaliacao
+        Long avaliacao
 ) {
 }

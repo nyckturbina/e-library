@@ -17,7 +17,7 @@ public class LivroListProvider {
                 "Clássico da literatura brasileira que explora ciúme e ambiguidade através da narrativa de Bentinho",
                 15,
                 256,
-                5
+                5L
         );
 
         Livro livro2 = new Livro(
@@ -28,7 +28,7 @@ public class LivroListProvider {
                 "Uma visão sombria de um futuro totalitário onde o governo controla todos os aspectos da vida",
                 8,
                 328,
-                5
+                5L
         );
 
         Livro livro3 = new Livro(
@@ -39,7 +39,7 @@ public class LivroListProvider {
                 "Primeiro volume da trilogia que segue a jornada de Frodo para destruir o Um Anel",
                 12,
                 464,
-                7
+                7L
         );
 
         Livro livro4 = new Livro(
@@ -50,7 +50,7 @@ public class LivroListProvider {
                 "História de Elizabeth Bennet e Mr. Darcy em uma crítica à sociedade inglesa do século XIX",
                 10,
                 424,
-                6
+                6L
         );
 
         Livro livro5 = new Livro(
@@ -61,7 +61,7 @@ public class LivroListProvider {
                 "A saga da família Buendía no vilarejo fictício de Macondo",
                 9,
                 432,
-                4
+                4L
         );
 
         Livro livro6 = new Livro(
@@ -72,7 +72,7 @@ public class LivroListProvider {
                 "A história filosófica de um príncipe que viaja por diferentes planetas",
                 20,
                 96,
-                10
+                10L
         );
 
         Livro livro7 = new Livro(
@@ -83,7 +83,7 @@ public class LivroListProvider {
                 "Primeiro livro da série que apresenta o mundo mágico de Harry Potter",
                 18,
                 264,
-                8
+                8L
         );
 
         Livro livro8 = new Livro(
@@ -94,7 +94,7 @@ public class LivroListProvider {
                 "Alegoria sobre o poder através da revolta dos animais em uma fazenda",
                 14,
                 152,
-                6
+                6L
         );
 
         Livro livro9 = new Livro(
@@ -105,7 +105,7 @@ public class LivroListProvider {
                 "A história de Raskólnikov e seu crime que o leva a um tormento psicológico",
                 7,
                 608,
-                3
+                3L
         );
 
         Livro livro10 = new Livro(
@@ -116,7 +116,7 @@ public class LivroListProvider {
                 "A jornada de Santiago em busca de seu tesouro pessoal e lições de vida",
                 16,
                 208,
-                9
+                9L
         );
 
         return List.of(

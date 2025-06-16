@@ -14,6 +14,7 @@ import DeleteBook from "./delete-book";
 import EditBook from "./edit-book-modal";
 import { useState } from "react";
 import { LendBookDialog } from "./lend-book/dialog";
+import { StarRating } from "@/components/star-rating";
 
 export default function DashboardTable() {
   let books: Book[] = [];
@@ -62,12 +63,14 @@ export default function DashboardTable() {
             <TableRow
               key={book.id}
               onDoubleClick={() => handleDoubleClick(book)}
-              className="cursor-pointer hover:bg-muted/50 transition-colors"
+              className="hover:bg-muted/50 transition-colors"
             >
               <TableCell>{book.titulo}</TableCell>
               <TableCell>{book.autor}</TableCell>
               <TableCell>{book.isbn}</TableCell>
-              <TableCell>{book.avaliacao}</TableCell>
+              <TableCell>
+                <StarRating rating={book.avaliacao ?? 0} />
+              </TableCell>
               <TableCell>{book.quantidadeTotal}</TableCell>
               <TableCell className="text-right">
                 <div className="flex items-center">

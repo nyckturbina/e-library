@@ -19,6 +19,11 @@ public class LivroMapperDTO {
     }
 
     public static LivroResponseDTO toResponse(Livro livro) {
+        double mediaAvaliacao = 0.0;
+        if (livro.getTotalAvaliacoes() != null && livro.getTotalAvaliacoes() > 0) {
+            mediaAvaliacao = (double) livro.getAvaliacao() / livro.getTotalAvaliacoes();
+        }
+
         return new LivroResponseDTO(
                 livro.getId(),
                 livro.getTitulo(),
@@ -28,7 +33,7 @@ public class LivroMapperDTO {
                 livro.getSinopse(),
                 livro.getExemplaresDisponiveisEmEstoque(),
                 livro.getNumeroPaginas(),
-                livro.getAvaliacao()
+                mediaAvaliacao
         );
     }
 }

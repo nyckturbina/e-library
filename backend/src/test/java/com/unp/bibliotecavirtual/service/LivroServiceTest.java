@@ -41,7 +41,7 @@ class LivroServiceTest {
                 "Um livro sobre arquitetura de software",
                 10,
                 1000,
-                10
+                10L
         );
 
         ReflectionTestUtils.setField(livroValido, "id", 1L);

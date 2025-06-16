@@ -23,7 +23,7 @@ public class EmprestimoListProvider {
                 "Clássico da literatura brasileira que explora ciúme e ambiguidade através da narrativa de Bentinho",
                 15,
                 256,
-                5
+                5L
         );
 
         Livro livro2 = new Livro(
@@ -34,7 +34,7 @@ public class EmprestimoListProvider {
                 "Uma visão sombria de um futuro totalitário onde o governo controla todos os aspectos da vida",
                 8,
                 328,
-                5
+                5L
         );
 
         Livro livro3 = new Livro(
@@ -45,7 +45,7 @@ public class EmprestimoListProvider {
                 "A aventura de Bilbo Bolseiro em uma jornada para recuperar um tesouro guardado por um dragão",
                 12,
                 336,
-                4
+                4L
         );
 
         // Criando empréstimos

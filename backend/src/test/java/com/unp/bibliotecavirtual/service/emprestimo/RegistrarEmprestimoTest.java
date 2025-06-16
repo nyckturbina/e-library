@@ -47,7 +47,7 @@ class RegistrarEmprestimoTest {
     @BeforeEach
     void setUp() {
         cliente = new Cliente("João da Silva", "12345678909", "joao.silva@example.com", "senhaSegura123");
-        livro = new Livro("O pequeno principe", "Alguém Aleatório", "Reflexão Intensa", "1234567890", "Esse livro é massa demais", 10, 89, 10);
+        livro = new Livro("O pequeno principe", "Alguém Aleatório", "Reflexão Intensa", "1234567890", "Esse livro é massa demais", 10, 89, 10L);
 
         final int PRAZO = calcularPrazo(livro);
 

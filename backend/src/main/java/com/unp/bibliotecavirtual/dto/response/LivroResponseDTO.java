@@ -9,6 +9,6 @@ public record LivroResponseDTO(
         String sinopse,
         Integer quantidadeTotal,
         Integer numeroPaginas,
-        Integer avaliacao
+        Double avaliacao
 ) {
 }
