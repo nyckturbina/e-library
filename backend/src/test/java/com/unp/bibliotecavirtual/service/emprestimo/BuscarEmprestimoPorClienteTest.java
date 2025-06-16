@@ -13,12 +13,14 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import static com.unp.bibliotecavirtual.service.emprestimo.utils.EmprestimoListProvider.getEmprestimosTeste;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
@@ -48,7 +50,8 @@ public class BuscarEmprestimoPorClienteTest {
 //        when(clienteRepository.findById(anyLong())).thenReturn(Optional.of(cliente));
 //        when(emprestimoService.buscarEmprestimosPorCliente(anyLong())).thenReturn(emprestimos);
     }
-//
+
+    //
     @Test
     void buscaEmprestimosCasoClienteExista() throws ClienteNaoEncontrado {
         when(clienteRepository.findById(anyLong())).thenReturn(Optional.of(cliente));
@@ -70,11 +73,18 @@ public class BuscarEmprestimoPorClienteTest {
         });
     }
 
-//    @Test
-//    void deveLancarExcecaoCasoClienteNaoExista() {
-//    }
-//
-//    @Test
-//    void deveRetornarListaVaziaCasoClienteNaoPossuaEmprestimos() {
-//    }
+
+    @Test
+    void deveRetornarListaVaziaCasoClienteNaoPossuaEmprestimos() {
+        List<Emprestimo> listaVazia = new ArrayList<>();
+
+        when(clienteRepository.findById(anyLong()))
+                .thenReturn(Optional.of(cliente));
+        when(emprestimoRepository.findByCliente(any(Cliente.class))).thenReturn(listaVazia);
+
+        List<Emprestimo> emprestimosBuscados = emprestimoService.buscarEmprestimosPorCliente(1L);
+
+        assertEquals(emprestimosBuscados, listaVazia);
+
+    }
 }
