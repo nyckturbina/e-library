@@ -1,23 +1,25 @@
 package com.unp.bibliotecavirtual.model;
 
-import java.time.LocalDate;
-
 import com.unp.bibliotecavirtual.model.enums.StatusEmprestimo;
-import jakarta.persistence.Embedded;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import lombok.*;
+import jakarta.persistence.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
+
+import java.time.LocalDate;
 
 import static com.unp.bibliotecavirtual.model.enums.StatusEmprestimo.ATIVO;
 
 @Entity
+@Table(name = "emprestimos")
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor
+@SQLDelete(sql = "UPDATE emprestimos SET is_deleted = true WHERE id = ?")
+@SQLRestriction(value = "is_deleted = false")
 public class Emprestimo {
 
     @Id
@@ -38,10 +40,13 @@ public class Emprestimo {
     private LocalDate dataEmprestimo;
 
     @NonNull
-    private LocalDate dataDevolucao;
+    private LocalDate prazoDevolucao;
 
     @Embedded
     private Multa multa;
 
     private StatusEmprestimo status = ATIVO;
+
+    @Column(nullable = false)
+    private Boolean isDeleted = false;
 }

@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 public interface EmprestimoRepository extends JpaRepository<Emprestimo, Long> {
-    List<Emprestimo> findByClienteIdAndDataDevolucaoIsNull(Long clienteId);
+    // List<Emprestimo> findByClienteIdAndDataDevolucaoIsNull(Long clienteId);
 
     List<Emprestimo> findByCliente(Cliente cliente);
 }

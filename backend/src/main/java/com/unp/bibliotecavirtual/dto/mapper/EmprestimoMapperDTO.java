@@ -26,7 +26,7 @@ public class EmprestimoMapperDTO {
                         emprestimo.getLivro().getIsbn()
                 ),
                 emprestimo.getDataEmprestimo(),
-                emprestimo.getDataDevolucao(),
+                emprestimo.getPrazoDevolucao(),
                 emprestimo.getMulta() != null ? emprestimo.getMulta().getValorCalculado() : 0,
                 emprestimo.getStatus()
 

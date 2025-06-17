@@ -96,7 +96,7 @@ class RegistrarDevolucaoTest {
     void deveGerarMultaCasoDevolucaoComAtraso() throws LivroNotFoundException, EmprestimoNotFoundException {
         // Data com 3 dias de atraso
         LocalDate dataDevolucaoComAtraso = LocalDate.now().minusDays(3);
-        emprestimo.setDataDevolucao(dataDevolucaoComAtraso);
+        emprestimo.setPrazoDevolucao(dataDevolucaoComAtraso);
 
         Emprestimo devolvidoComMulta = emprestimoService.registrarDevolucao(
                 emprestimo.getId()

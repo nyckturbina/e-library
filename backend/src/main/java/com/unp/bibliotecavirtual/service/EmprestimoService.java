@@ -8,16 +8,13 @@ import com.unp.bibliotecavirtual.model.Cliente;
 import com.unp.bibliotecavirtual.model.Emprestimo;
 import com.unp.bibliotecavirtual.model.Livro;
 import com.unp.bibliotecavirtual.model.Multa;
-import com.unp.bibliotecavirtual.model.enums.StatusEmprestimo;
 import com.unp.bibliotecavirtual.repository.ClienteRepository;
 import com.unp.bibliotecavirtual.repository.EmprestimoRepository;
 import com.unp.bibliotecavirtual.repository.LivroRepository;
-import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import static com.unp.bibliotecavirtual.model.enums.StatusEmprestimo.ATRASADO;
@@ -85,7 +82,7 @@ public class EmprestimoService {
                 .findById(emprestimo.getLivro().getId())
                 .orElseThrow(LivroNotFoundException::new);
 
-        LocalDate dataDevolucaoPrevista = emprestimo.getDataDevolucao();
+        LocalDate dataDevolucaoPrevista = emprestimo.getPrazoDevolucao();
 
         double multa = 0;
         if (dataDevolucaoReal.isAfter(dataDevolucaoPrevista)) {
@@ -98,7 +95,7 @@ public class EmprestimoService {
         livro.setExemplaresDisponiveisEmEstoque(livro.getExemplaresDisponiveisEmEstoque() + 1);
         livroRepository.save(livro);
 
-        emprestimo.setDataDevolucao(dataDevolucaoReal);
+        emprestimo.setPrazoDevolucao(dataDevolucaoReal);
         emprestimo.setStatus(DEVOLVIDO);
         emprestimoRepository.save(emprestimo);
 

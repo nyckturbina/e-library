@@ -11,9 +11,9 @@ import {
 } from "@/components/ui/table";
 import { loansProvider } from "@/models/providers/loans-provider";
 import { useGetAllLoans } from "@/service/loan/get-loans";
-import { Trash2 } from "lucide-react";
 import { useEffect } from "react";
 import useTable, { LoanProviderType } from ".";
+import DeleteLoanDialog from "./delete-loan/dialog";
 import RateBookDialog from "./rate-book/dialog";
 import ReturnBookDialog from "./return-book/return-book";
 
@@ -46,7 +46,7 @@ export default function DashboardTable() {
             <TableHead>CPF</TableHead>
             <TableHead>Livro</TableHead>
             <TableHead>Data Emprestimo</TableHead>
-            <TableHead>Data de Devolução</TableHead>
+            <TableHead>Prazo de Devolução</TableHead>
             <TableHead>Multa</TableHead>
             <TableHead>Status</TableHead>
             <TableHead>Ações</TableHead>
@@ -87,12 +87,7 @@ export default function DashboardTable() {
               </TableCell>
               <TableCell>
                 <div className="flex gap-2">
-                  <button
-                    className="p-1 text-red-500 hover:bg-red-50 rounded cursor-pointer"
-                    title="Excluir empréstimo"
-                  >
-                    <Trash2 className="text-slate-400" size={18} />
-                  </button>
+                  <DeleteLoanDialog loan={loan} />
                   <ReturnBookDialog
                     loan={loan}
                     setLoans={setLoans}
