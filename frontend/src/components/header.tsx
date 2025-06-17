@@ -1,15 +1,17 @@
-import React from "react";
-import { Input } from "./ui/input";
-import { Button } from "./ui/button";
-import { BookOpen, LogIn, Menu, Search } from "lucide-react";
 import ELibraryWithIcon from "@/app/home/elibrary-icon";
+import { BookOpen, LogIn, Search } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { Button } from "./ui/button";
+import { Input } from "./ui/input";
 
 export default function Header() {
+  const router = useRouter();
+
   return (
     <div className="bg-charcoal-blue px-3 py-4 flex flex-col gap-5">
       <div className="flex gap-6 items-center justify-around">
-          <ELibraryWithIcon />
-        
+        <ELibraryWithIcon />
+
         <div className="flex gap-1 w-3/5 items-center">
           <Input
             name="pesquisa"
@@ -21,7 +23,7 @@ export default function Header() {
             <Search className="text-charcoal-blue" />
           </Button>
         </div>
-        
+
         {/* <div className="flex justify-between">
         </div> */}
       </div>
@@ -29,14 +31,24 @@ export default function Header() {
       <hr className="border border-t-0 border-slate-500 opacity-90"></hr>
 
       <div className="flex justify-center gap-20">
-        <div className="flex flex-col items-center text-white">
+        <button
+          className="cursor-pointer flex flex-col items-center text-white"
+          onClick={() => {
+            router.push("/cliente/emprestimos");
+          }}
+        >
           <BookOpen />
           Empréstimos ativos
-        </div>
-        <div className="flex flex-col items-center text-white">
+        </button>
+        <button
+          className="cursor-pointer flex flex-col items-center text-white"
+          onClick={() => {
+            router.push("/");
+          }}
+        >
           <LogIn className="text-white" />
           Log Out
-        </div>
+        </button>
       </div>
     </div>
   );
