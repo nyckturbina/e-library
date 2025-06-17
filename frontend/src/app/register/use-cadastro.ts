@@ -4,6 +4,7 @@ import {
   registerFormSchema,
   RegisterFormType
 } from "@/models/zod-schemas/register";
+import { useCadastroCliente } from "@/service/client/create-client-from-signup";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -13,6 +14,7 @@ export function useCadastro() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const [mensagem, setMensagem] = useState("");
   const [titulo, setTitulo] = useState("");
+  const { mutate, error } = useCadastroCliente();
 
   const router = useRouter();
 
@@ -26,11 +28,19 @@ export function useCadastro() {
   });
 
   function onSubmit(data: RegisterFormType) {
-    setTitulo("CADASTRADO COM SUCESSO!");
-    setMensagem(`Nome: ${data.nome}\nEmail: ${data.email}`);
-    setDialogOpen(true);
-    reset();
-    console.log(data);
+    mutate(data, {
+      onSuccess: () => {
+        setTitulo("CADASTRADO COM SUCESSO!");
+        setMensagem(`Nome: ${data.nome}\nEmail: ${data.email}`);
+        setDialogOpen(true);
+        reset();
+      },
+      onError: error => {
+        setTitulo("ERRO AO CADASTRAR");
+        setMensagem(error.message);
+        setDialogOpen(true);
+      }
+    });
   }
 
   function handleBack() {
