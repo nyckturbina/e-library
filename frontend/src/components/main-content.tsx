@@ -1,18 +1,9 @@
 "use client";
 
-import { useBooks } from "@/service/livro-consumer";
 import BookCard from "@/components/book-card";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious
-} from "@/components/ui/pagination";
 import { books as mockBooks } from "@/models/providers/books-provider";
+import { useBooks } from "@/service/livro-consumer";
 
 export default function MainContent() {
   let booksCards;
@@ -62,7 +53,7 @@ export default function MainContent() {
             {booksCards}
           </CardContent>
 
-          <Pagination>
+          {/* <Pagination>
             <PaginationContent>
               <PaginationItem>
                 <PaginationPrevious href="#" />
@@ -85,7 +76,7 @@ export default function MainContent() {
                 <PaginationNext href="#" />
               </PaginationItem>
             </PaginationContent>
-          </Pagination>
+          </Pagination> */}
         </Card>
       </main>
     </div>
