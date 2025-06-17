@@ -1,11 +1,13 @@
 import { LoginFormData, loginSchema } from "@/models/zod-schemas/login-schema";
 import { useLoginMutation } from "@/service/client/login-client";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useAuth } from "@/components/context/AuthContext";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
 export function useLoginForm() {
   const router = useRouter();
+  const { setClientId } = useAuth();
   const {
     register,
     handleSubmit,
@@ -29,6 +31,7 @@ export function useLoginForm() {
       mutate(data, {
         onSuccess: response => {
           if (response) {
+            setClientId(response.id); // Salva o id do cliente no contexto
             router.push("/home");
           } else {
             setFormError("root", {

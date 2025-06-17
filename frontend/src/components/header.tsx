@@ -3,9 +3,11 @@ import { BookOpen, LogIn, Search } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
+import { useAuth } from "@/components/context/AuthContext";
 
 export default function Header() {
   const router = useRouter();
+  const { logout } = useAuth();
 
   return (
     <div className="bg-charcoal-blue px-3 py-4 flex flex-col gap-5">
@@ -43,6 +45,7 @@ export default function Header() {
         <button
           className="cursor-pointer flex flex-col items-center text-white"
           onClick={() => {
+            logout();
             router.push("/");
           }}
         >
