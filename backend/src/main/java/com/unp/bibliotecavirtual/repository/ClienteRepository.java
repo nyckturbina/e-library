@@ -8,7 +8,7 @@ import com.unp.bibliotecavirtual.model.Cliente;
 import java.util.Optional;
 
 public interface ClienteRepository extends JpaRepository<Cliente, Long> {
-    Cliente findByEmail(String email);
+    Optional<Cliente> findByEmail(String email);
 
     boolean existsByCpf(String cpf);
 

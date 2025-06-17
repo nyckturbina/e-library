@@ -19,8 +19,9 @@ export function useLoginForm() {
 
   const onSubmit = async (data: LoginFormData) => {
     try {
+      // Verifica login adm
       if (data.email === "admin@admin.com" && data.password === "qwe123") {
-        localStorage.setItem("loggedIn", "true");
+        localStorage.setItem("admLoggedIn", "true");
         router.push("/dashboard/livros");
         return;
       }
