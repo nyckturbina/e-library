@@ -1,6 +1,5 @@
-'use client'
+"use client";
 
-import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -8,62 +7,33 @@ import {
   CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle,
+  CardTitle
 } from "@/components/ui/card";
-
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-
+import CadastroDialog from "./CadastroDialog";
 import { Input } from "@/components/ui/input";
-
-import { fromTheme } from "tailwind-merge";
-
-import { useState } from "react";
+import { useCadastro } from "./use-cadastro";
 
 export default function Cadastro() {
-
-  const [nome, setNome] = useState("");
-  const [email, setEmail] = useState("");
-  const [senha, setSenha] = useState("");
-  const [confirmarSenha, setConfirmarSenha] = useState("");
-
-  const [dialogOpen, setDialogOpen] = useState(false);
-  const [mensagem, setMensagem] = useState("");
-  const [titulo, setTitulo] = useState("");
-
-  const router = useRouter();
-
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-
-    if (senha !== confirmarSenha) {
-      setTitulo("ERRO NO CADASTRO!");
-      setMensagem("As senhas não coincidem");
-      setDialogOpen(true);
-      return;
-    }
-
-    setTitulo("CADASTRADO COM SUCESSO!");
-    setMensagem(`Nome: ${nome}\nEmail: ${email}`);
-    setDialogOpen(true);
-
-    setDialogOpen(true);
-
-    console.log({nome, email, senha, confirmarSenha});
-  }
+  const {
+    dialogOpen,
+    setDialogOpen,
+    mensagem,
+    titulo,
+    register,
+    handleSubmit,
+    errors,
+    onSubmit,
+    handleBack
+  } = useCadastro();
 
   return (
-    
     <div className="min-h-screen flex items-center justify-center">
-
       <div className="absolute top-4 left-4">
-        <Button className="cursor-pointer" variant="outline" onClick={() => router.push("/login")}>
+        <Button
+          className="cursor-pointer"
+          variant="outline"
+          onClick={handleBack}
+        >
           ← Voltar
         </Button>
       </div>
@@ -74,29 +44,84 @@ export default function Cadastro() {
           <CardDescription>Preencha todos os campos</CardDescription>
         </CardHeader>
         <CardContent className="">
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <Input type="text" placeholder="Nome" value={nome} onChange={(e) => setNome(e.target.value)} required/>
-            <Input type="email" placeholder="E-mail" value={email} onChange={(e) => setEmail(e.target.value)} required/>
-            <Input type="password" placeholder="Senha" value={senha} onChange={(e) => setSenha(e.target.value)} required/>
-            <Input type="password" placeholder="Confirme sua senha" value={confirmarSenha} onChange={(e) => setConfirmarSenha(e.target.value)}/>
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+            <div>
+              <Input type="text" placeholder="Nome" {...register("nome")} />
+              {errors.nome && (
+                <p className="text-sm text-red-500 mt-1">
+                  {errors.nome.message}
+                </p>
+              )}
+            </div>
 
-            <Button type="submit" className="w-full cursor-pointer" variant={"default"}>Registrar</Button>
+            <div>
+              <Input 
+                type="text" 
+                placeholder="CPF" 
+                {...register("cpf")}
+                maxLength={14}
+              />
+              {errors.cpf && (
+                <p className="text-sm text-red-500 mt-1">
+                  {errors.cpf.message}
+                </p>
+              )}
+            </div>
+
+            <div>
+              <Input type="email" placeholder="E-mail" {...register("email")} />
+              {errors.email && (
+                <p className="text-sm text-red-500 mt-1">
+                  {errors.email.message}
+                </p>
+              )}
+            </div>
+
+            <div>
+              <Input
+                type="password"
+                placeholder="Senha"
+                {...register("senha")}
+              />
+              {errors.senha && (
+                <p className="text-sm text-red-500 mt-1">
+                  {errors.senha.message}
+                </p>
+              )}
+            </div>
+
+            <div>
+              <Input
+                type="password"
+                placeholder="Confirme sua senha"
+                {...register("confirmarSenha")}
+              />
+              {errors.confirmarSenha && (
+                <p className="text-sm text-red-500 mt-1">
+                  {errors.confirmarSenha.message}
+                </p>
+              )}
+            </div>
+
+            <Button
+              type="submit"
+              className="w-full cursor-pointer"
+              variant={"default"}
+            >
+              Registrar
+            </Button>
           </form>
         </CardContent>
-        <CardFooter>
-        </CardFooter>
+        <CardFooter></CardFooter>
       </Card>
 
-      <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>{titulo}</DialogTitle>
-            <DialogDescription className="whitespace-pre-line">
-              {mensagem}
-            </DialogDescription>
-          </DialogHeader>
-        </DialogContent>
-      </Dialog>
+      {/* Diálogo de feedback */}
+      <CadastroDialog 
+        open={dialogOpen} 
+        onOpenChange={setDialogOpen} 
+        titulo={titulo} 
+        mensagem={mensagem} 
+      />
     </div>
   );
 }
