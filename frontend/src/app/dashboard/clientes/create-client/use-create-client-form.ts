@@ -1,4 +1,4 @@
-import { useCreateClient } from "@/service/client/post-client";
+import { useCreateClient } from "@/service/client/create-client";
 import {
   Cliente,
   ClientFormCreateSchema,
