@@ -40,6 +40,9 @@ public class EmprestimoService {
         Livro livro = livroRepository.findById(livroId).orElseThrow(LivroNotFoundException::new);
         Cliente cliente = clienteRepository.findById(clienteId).orElseThrow(ClienteNaoEncontrado::new);
 
+        if (livro.getExemplaresDisponiveisEmEstoque() == null || livro.getExemplaresDisponiveisEmEstoque() == 0)
+            livro.setExemplaresDisponiveisEmEstoque(0);
+
         if (livro.getExemplaresDisponiveisEmEstoque() <= 0) throw new LivroNaoDisponivelException();
 
         int prazo = calcularPrazo(livro);
@@ -59,8 +62,7 @@ public class EmprestimoService {
     }
 
     public List<Emprestimo> buscarEmprestimosPorCliente(Long idCliente) throws ClienteNaoEncontrado {
-        Cliente cliente = clienteRepository.findById(idCliente)
-                .orElseThrow(ClienteNaoEncontrado::new);
+        Cliente cliente = clienteRepository.findById(idCliente).orElseThrow(ClienteNaoEncontrado::new);
 
         return emprestimoRepository.findByCliente(cliente);
     }
@@ -75,14 +77,10 @@ public class EmprestimoService {
 //         Multa deve saber se calcular sozinha, ao receber os dias de atraso
         LocalDate dataDevolucaoReal = LocalDate.now();
 
-        Emprestimo emprestimo = emprestimoRepository
-                .findById(emprestimoId)
-                .orElseThrow(EmprestimoNotFoundException::new);
+        Emprestimo emprestimo = emprestimoRepository.findById(emprestimoId).orElseThrow(EmprestimoNotFoundException::new);
 
         // Livro deve ser uma entidade gerenciada
-        Livro livro = livroRepository
-                .findById(emprestimo.getLivro().getId())
-                .orElseThrow(LivroNotFoundException::new);
+        Livro livro = livroRepository.findById(emprestimo.getLivro().getId()).orElseThrow(LivroNotFoundException::new);
 
         LocalDate dataDevolucaoPrevista = emprestimo.getPrazoDevolucao();
 
@@ -93,6 +91,9 @@ public class EmprestimoService {
             emprestimo.setMulta(new Multa(multa));
             emprestimo.setStatus(ATRASADO);
         }
+
+        if (livro.getExemplaresDisponiveisEmEstoque() == null || livro.getExemplaresDisponiveisEmEstoque() == 0)
+            livro.setExemplaresDisponiveisEmEstoque(0);
 
         livro.setExemplaresDisponiveisEmEstoque(livro.getExemplaresDisponiveisEmEstoque() + 1);
         livroRepository.save(livro);
