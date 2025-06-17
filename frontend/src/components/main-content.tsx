@@ -4,14 +4,40 @@ import BookCard from "@/components/book-card";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { books as mockBooks } from "@/models/providers/books-provider";
 import { useBooks } from "@/service/livro-consumer";
+import { Book } from "@/models/book";
 
-export default function MainContent() {
+interface MainContentProps {
+  searchType: string;
+  searchTerm: string;
+}
+
+export default function MainContent({ searchType, searchTerm }: MainContentProps) {
   let booksCards;
 
   const { data, isLoading, isFetching, error } = useBooks();
 
+  // Função de filtro
+  function filterBooks(books: Book[]) {
+    if (!searchTerm.trim()) return books;
+    const term = searchTerm.toLowerCase();
+    switch (searchType) {
+      case "titulo":
+        return books.filter(book => book.titulo?.toLowerCase().includes(term));
+      case "autor":
+        return books.filter(book => book.autor?.toLowerCase().includes(term));
+      // Não existe 'genero' no Book, então filtra por sinopse como fallback
+      case "genero":
+        return books.filter(book => book.sinopse?.toLowerCase().includes(term));
+      case "isbn":
+        return books.filter(book => book.isbn?.toLowerCase().includes(term));
+      default:
+        return books;
+    }
+  }
+
   if (data) {
-    booksCards = data.map(book => (
+    const filtered = filterBooks(data);
+    booksCards = filtered.map(book => (
       <BookCard
         key={book.id}
         capa={book.capa}

@@ -4,8 +4,21 @@ import { useRouter } from "next/navigation";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { useAuth } from "@/components/context/AuthContext";
+import { Dispatch, SetStateAction } from "react";
 
-export default function Header() {
+interface HeaderProps {
+  searchType: string;
+  setSearchType: Dispatch<SetStateAction<string>>;
+  searchTerm: string;
+  setSearchTerm: Dispatch<SetStateAction<string>>;
+}
+
+export default function Header({
+  searchType,
+  setSearchType,
+  searchTerm,
+  setSearchTerm,
+}: HeaderProps) {
   const router = useRouter();
   const { logout } = useAuth();
 
@@ -15,11 +28,26 @@ export default function Header() {
         <ELibraryWithIcon />
 
         <div className="flex gap-1 w-3/5 items-center">
+          {/* Combo box de opções de pesquisa */}
+          <select
+            name="searchType"
+            className="bg-white border border-slate-300 rounded-xl px-2 py-2 text-charcoal-blue focus:outline-none focus:ring-2 focus:ring-blue-400"
+            value={searchType}
+            onChange={(e) => setSearchType(e.target.value)}
+          >
+            <option value="titulo">Título</option>
+            <option value="autor">Autor</option>
+            <option value="genero">Gênero</option>
+            <option value="isbn">ISBN</option>
+          </select>
+
           <Input
             name="pesquisa"
             type="text"
             placeholder="Pesquisar livros, autores, categorias..."
             className="bg-white"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
           />
           <Button type="submit" className="bg-white">
             <Search className="text-charcoal-blue" />

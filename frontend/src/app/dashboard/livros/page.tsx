@@ -4,11 +4,14 @@ import CreateLivroModal from "@/components/dashboard-livros/create-livro-modal";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import DashboardTable from "./dashboard-table";
 
 export default function Dashboard() {
   const router = useRouter();
+  // Estado para pesquisa
+  const [searchType, setSearchType] = useState("titulo");
+  const [searchTerm, setSearchTerm] = useState("");
 
   // Redireciona caso não esteja logado
   useEffect(() => {
@@ -24,7 +27,12 @@ export default function Dashboard() {
     <div className="p-10 justify-center min-h-screen flex items-center flex-col gap-3">
       <h1 className="text-2xl">Gerenciamento de livros</h1>
 
-      <DashboardTable />
+      <DashboardTable
+        searchType={searchType}
+        setSearchType={setSearchType}
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+      />
 
       <CreateLivroModal />
 
