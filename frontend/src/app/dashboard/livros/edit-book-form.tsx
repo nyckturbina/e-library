@@ -23,8 +23,10 @@ export default function EditBookForm({ book, onSuccess }: EditBookProps) {
       titulo: book.titulo,
       autor: book.autor,
       sinopse: book.sinopse,
+      genero: book.genero ?? "",
       isbn: book.isbn,
-      quantidade: book.quantidadeTotal
+      quantidade: book.quantidadeTotal,
+      numeroPaginas: (book as any).numeroPaginas ?? 1 // fallback para 1 se não existir
     }
   });
 
