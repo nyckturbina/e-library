@@ -3,9 +3,9 @@ import {
   LendBookFormType,
   lendBookSchema
 } from "@/models/zod-schemas/lend-book-schema";
-import { getBookByIsbn } from "@/service/book/get-book-by-isbn";
 import { lendLoan } from "@/service/loan/lend-loan";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
@@ -13,6 +13,7 @@ interface useLendBookDialogProps {
   book: Book;
 }
 export default function useLendBookDialog({ book }: useLendBookDialogProps) {
+  const queryClient = useQueryClient();
   const [isOpen, setOpen] = useState<boolean>();
   const {
     register,
@@ -26,9 +27,10 @@ export default function useLendBookDialog({ book }: useLendBookDialogProps) {
     }
   });
 
-  const handleFormSubmit = (data: LendBookFormType) => {
+  const handleFormSubmit = async (data: LendBookFormType) => {
     try {
-      lendLoan(data.clientCpf, data.bookIsbn);
+      await lendLoan(data.clientCpf, data.bookIsbn);
+      queryClient.invalidateQueries({ queryKey: ["books"] }); // Refaz a busca dos livros
     } catch (error) {
       console.error("Erro ao solicitar empréstimo:", error);
     }
