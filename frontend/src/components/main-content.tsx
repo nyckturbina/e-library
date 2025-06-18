@@ -1,17 +1,20 @@
-"use client";
+"use client"; 
 
 import BookCard from "@/components/book-card";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Book } from "@/models/book";
 import { books as mockBooks } from "@/models/providers/books-provider";
 import { useBooks } from "@/service/livro-consumer";
-import { Book } from "@/models/book";
 
 interface MainContentProps {
   searchType: string;
   searchTerm: string;
 }
 
-export default function MainContent({ searchType, searchTerm }: MainContentProps) {
+export default function MainContent({
+  searchType,
+  searchTerm
+}: MainContentProps) {
   let booksCards;
 
   const { data, isLoading, isFetching, error } = useBooks();
@@ -44,6 +47,7 @@ export default function MainContent({ searchType, searchTerm }: MainContentProps
         titulo={book.titulo}
         autor={book.autor}
         genero={book.genero}
+        avaliacao={book.avaliacao}
       />
     ));
   }
