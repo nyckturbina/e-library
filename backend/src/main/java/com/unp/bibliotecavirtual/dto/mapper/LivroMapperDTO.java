@@ -6,6 +6,8 @@ import com.unp.bibliotecavirtual.model.Livro;
 
 public class LivroMapperDTO {
     public static Livro toEntity(LivroRequestDTO request) {
+        Long avaliacao = request.avaliacao() != null ? request.avaliacao() : 0L;
+
         return new Livro(
                 request.titulo(),
                 request.autor(),
@@ -14,7 +16,7 @@ public class LivroMapperDTO {
                 request.sinopse(),
                 request.quantidade(),
                 request.numeroPaginas(),
-                request.avaliacao()
+                avaliacao
         );
     }
 

@@ -1,5 +1,4 @@
 import { updateBook } from "@/service/livro-consumer";
-import Gender from "@/components/home/create-livro/genero";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -62,8 +61,12 @@ export default function EditBookForm({ book, onSuccess }: EditBookProps) {
             )}
           </div>
 
-          <div className="flex flex-col">
-            <Gender />
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="genero">Gênero</Label>
+            <Input id="genero" {...register("genero")} />
+            {errors.genero && (
+              <p className="text-red-500 mb-2">{errors.genero.message}</p>
+            )}
           </div>
 
           <div className="grid grid-cols-5 gap-3 items-center">
@@ -92,6 +95,23 @@ export default function EditBookForm({ book, onSuccess }: EditBookProps) {
             {errors.quantidade && (
               <p className="text-red-500 col-span-5 mb-2">
                 {errors.quantidade.message}
+              </p>
+            )}
+          </div>
+
+          <div className="grid grid-cols-5 gap-3 items-center">
+            <Label htmlFor="numeroPaginas" className="text-right">
+              Número de páginas
+            </Label>
+            <Input
+              id="numeroPaginas"
+              type="number"
+              className="col-span-3"
+              {...register("numeroPaginas", { valueAsNumber: true })}
+            />
+            {errors.numeroPaginas && (
+              <p className="text-red-500 col-span-5 mb-2">
+                {errors.numeroPaginas.message}
               </p>
             )}
           </div>
