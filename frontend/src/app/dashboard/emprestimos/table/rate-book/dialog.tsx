@@ -4,7 +4,6 @@ import {
   DialogClose,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle
 } from "@/components/ui/dialog";
@@ -46,18 +45,16 @@ export default function RateBookDialog({ bookId }: { bookId: number }) {
               {errors.rate && (
                 <div className="text-red-500">{errors.rate.message}</div>
               )}
+              <div className="flex justify-end gap-2 mt-4">
+                <DialogClose asChild>
+                  <Button type="button" variant="outline">
+                    Cancelar
+                  </Button>
+                </DialogClose>
+                <Button type="submit">Confirmar avaliação</Button>
+              </div>
             </form>
           </div>
-          <DialogFooter>
-            <DialogClose asChild>
-              <Button type="button" variant="outline">
-                Cancelar
-              </Button>
-            </DialogClose>
-            <Button form="rate-book-form" type="submit">
-              Confirmar avaliação
-            </Button>
-          </DialogFooter>
         </DialogContent>
       </Dialog>
     </div>

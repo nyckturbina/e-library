@@ -8,6 +8,7 @@ export default function useRateBook({ bookId }: { bookId: number }) {
 
   const handleRatingConfirm = (data: RatingBookType) => {
     mutate({ bookId, rate: data.rate });
+    console.log(`Avaliação registrada com sucesso: ${data.rate}`);
 
     if (error) {
       alert(`Erro registrar avaliação:
