@@ -9,10 +9,32 @@ import {
   TableRow
 } from "@/components/ui/table";
 import { useFetchLoansByClient } from "@/service/loan/fetch-loans-by-client-id";
+import { useEffect } from "react";
 
 export default function ClientLoansTable() {
   const { clientId } = useAuth();
-  const { data, isLoading, isError } = useFetchLoansByClient(clientId ? clientId : 0);
+  const { data, isLoading, isError } = useFetchLoansByClient(
+    clientId ? clientId : 0
+  );
+
+  useEffect(() => {
+    if (data && data.length > 0) {
+      // Encontrar o empréstimo mais antigo
+      const oldestLoan = data.reduce((oldest, current) => {
+        const oldestDate = new Date(oldest.dataEmprestimo);
+        const currentDate = new Date(current.dataEmprestimo);
+        return currentDate < oldestDate ? current : oldest;
+      }, data[0]);
+      if (oldestLoan.dataDevolucao) {
+        const devolucao = new Date(
+          oldestLoan.dataEmprestimo
+        ).toLocaleDateString("pt-BR");
+        alert(
+          `Lembrete: a data de devolução do seu empréstimo mais antigo é ${devolucao}, o prazo de entrega é ${oldestLoan.dataDevolucao}.`
+        );
+      }
+    }
+  }, [data]);
 
   if (!data) {
     return <div>Nenhum empréstimo encontrado</div>;
