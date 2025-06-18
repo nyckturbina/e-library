@@ -1,11 +1,13 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
+import { StarRating } from "./star-rating";
 
 interface BookCardProps {
   capa: string;
   titulo: string;
   autor: string;
   avaliacao?: number;
+  genero?: string;
 }
 
 export default function BookCard({
@@ -13,10 +15,11 @@ export default function BookCard({
   titulo,
   autor,
   avaliacao = 0,
+  genero
 }: BookCardProps) {
   return (
     <div>
-      <Card className="w-45">
+      <Card className="w-64">
         <CardHeader>
           <img
             src={"https://placehold.jp/200x250.png"}
@@ -26,7 +29,12 @@ export default function BookCard({
         <CardContent>
           <CardTitle>{titulo}</CardTitle>
           <p>Autor: {autor}</p>
-          <p>Avaliação: {avaliacao.toFixed(1)}</p>
+          <div className="flex items-center gap-2">
+            <span>Avaliação:</span>
+            <StarRating rating={avaliacao} />
+            <span className="text-xs text-slate-500">({avaliacao.toFixed(1)})</span>
+          </div>
+          <p>Gênero: {genero}</p>
         </CardContent>
       </Card>
     </div>

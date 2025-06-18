@@ -103,6 +103,7 @@ export default function DashboardTable({ searchType, setSearchType, searchTerm, 
           <TableRow>
             <TableHead className="w-[200px]">Nome</TableHead>
             <TableHead>Autor</TableHead>
+            <TableHead>Gênero</TableHead>
             <TableHead>ISBN</TableHead>
             <TableHead>Avaliação</TableHead>
             <TableHead>Estoque</TableHead>
@@ -118,6 +119,7 @@ export default function DashboardTable({ searchType, setSearchType, searchTerm, 
             >
               <TableCell>{book.titulo}</TableCell>
               <TableCell>{book.autor}</TableCell>
+              <TableCell>{book.genero}</TableCell>
               <TableCell>{book.isbn}</TableCell>
               <TableCell>
                 <StarRating rating={book.avaliacao ?? 0} />

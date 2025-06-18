@@ -7,4 +7,5 @@ export interface Book {
   isbn: string
   avaliacao?: number; // opcional pois ainda não foi definido no backend
   quantidadeTotal: number;
+  genero?: string;
 }

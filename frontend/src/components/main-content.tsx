@@ -43,6 +43,7 @@ export default function MainContent({ searchType, searchTerm }: MainContentProps
         capa={book.capa}
         titulo={book.titulo}
         autor={book.autor}
+        genero={book.genero}
       />
     ));
   }
