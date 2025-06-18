@@ -8,7 +8,6 @@ import { URL_API_LIVROS as URL_API } from "@/service/livro-consumer";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
-import Gender from "../home/create-livro/genero";
 
 interface CreateLivroFormProps {
   onSuccess?: () => void;
@@ -24,9 +23,15 @@ export default function CreateLivroForm({ onSuccess }: CreateLivroFormProps) {
   });
 
   const submit = async (data: RequestLivroType) => {
+    const payload = { ...data, avaliacao: 0 };
+    console.log("Dados a serem enviados:", JSON.stringify(payload, null, 2));
     try {
-      await axios.post(URL_API, data);
-      console.log("Dados do livro enviados:", data);
+      await axios.post(URL_API, payload, {
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+      console.log("Dados do livro enviados:", payload);
       if (onSuccess) onSuccess(); // Fecha modal
     } catch (error) {
       console.error(`Erro na requisção: ${error}`);
@@ -61,8 +66,12 @@ export default function CreateLivroForm({ onSuccess }: CreateLivroFormProps) {
             )}
           </div>
 
-          <div className="flex flex-col">
-            <Gender />
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="genero">Gênero</Label>
+            <Input id="genero" {...register("genero")} />
+            {errors.genero && (
+              <p className="text-red-500 mb-2">{errors.genero.message}</p>
+            )}
           </div>
 
           <div className="grid grid-cols-5 gap-3 items-center">
@@ -89,6 +98,23 @@ export default function CreateLivroForm({ onSuccess }: CreateLivroFormProps) {
             {errors.quantidade && (
               <p className="text-red-500 col-span-5 mb-2">
                 {errors.quantidade.message}
+              </p>
+            )}
+          </div>
+
+          <div className="grid grid-cols-5 gap-3 items-center">
+            <Label htmlFor="numeroPaginas" className="text-right">
+              Número de páginas
+            </Label>
+            <Input
+              id="numeroPaginas"
+              type="number"
+              className="col-span-3"
+              {...register("numeroPaginas", { valueAsNumber: true })}
+            />
+            {errors.numeroPaginas && (
+              <p className="text-red-500 col-span-5 mb-2">
+                {errors.numeroPaginas.message}
               </p>
             )}
           </div>

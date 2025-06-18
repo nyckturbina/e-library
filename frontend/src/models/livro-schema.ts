@@ -26,14 +26,7 @@ export const FormLivroSchema = z.object({
   genero: z
     .string()
     .min(1, { message: "Gênero é obrigatório" })
-    .refine(
-      (genero) =>
-        ["Ficção", "Fantasia", "Técnico", "Biografia", "Romance"].includes(
-          genero
-        ),
-      { message: "Gênero inválido" }
-    )
-    .optional(),
+    .max(30, { message: "Gênero deve ter no máximo 30 caracteres" }),
 
   isbn: z
     .string()
@@ -53,7 +46,15 @@ export const FormLivroSchema = z.object({
     })
     .min(1, { message: "Quantidade mínima é 1" })
     .max(1000, { message: "Quantidade máxima é 1000" })
-    .int({ message: "Quantidade deve ser um número inteiro" })
+    .int({ message: "Quantidade deve ser um número inteiro" }),
+  numeroPaginas: z
+    .number({
+      required_error: "Número de páginas é obrigatório",
+      invalid_type_error: "Número de páginas deve ser um número"
+    })
+    .min(1, { message: "Número de páginas deve ser maior que zero" })
+    .max(1000000, { message: "Número de páginas deve ser menor que 1.000.000" })
+    .int({ message: "Número de páginas deve ser um número inteiro" })
 });
 
 export type RequestLivroType = z.infer<typeof FormLivroSchema>;
