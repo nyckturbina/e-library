@@ -12,14 +12,18 @@ import { Book } from "@/models/book";
 import { deleteBook } from "@/service/livro-consumer";
 import { Dialog } from "@radix-ui/react-dialog";
 import { Trash2Icon } from "lucide-react";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface DeleteBookProps {
   book: Book;
 }
 
 export default function DeleteBook({ book }: DeleteBookProps) {
+  const queryClient = useQueryClient();
+
   const handleDelete = async () => {
     await deleteBook(book.id);
+    queryClient.invalidateQueries({ queryKey: ["books"] });
     console.log(`Livro "${book.titulo}" deletado`);
   };
 

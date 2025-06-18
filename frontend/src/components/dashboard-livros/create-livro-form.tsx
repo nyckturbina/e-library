@@ -8,12 +8,14 @@ import { URL_API_LIVROS as URL_API } from "@/service/livro-consumer";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface CreateLivroFormProps {
   onSuccess?: () => void;
 }
 
 export default function CreateLivroForm({ onSuccess }: CreateLivroFormProps) {
+  const queryClient = useQueryClient();
   const {
     register,
     handleSubmit,
@@ -32,9 +34,10 @@ export default function CreateLivroForm({ onSuccess }: CreateLivroFormProps) {
         }
       });
       console.log("Dados do livro enviados:", payload);
+      queryClient.invalidateQueries({ queryKey: ["books"] });
       if (onSuccess) onSuccess(); // Fecha modal
     } catch (error) {
-      console.error(`Erro na requisção: ${error}`);
+      console.error(`Erro na requisição: ${error}`);
     }
   };
 

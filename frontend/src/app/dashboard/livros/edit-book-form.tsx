@@ -6,6 +6,7 @@ import { Book } from "@/models/book";
 import { FormLivroSchema, RequestLivroType } from "@/models/livro-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface EditBookProps {
   book: Book;
@@ -13,6 +14,7 @@ interface EditBookProps {
 }
 
 export default function EditBookForm({ book, onSuccess }: EditBookProps) {
+  const queryClient = useQueryClient();
   const {
     register,
     handleSubmit,
@@ -31,8 +33,10 @@ export default function EditBookForm({ book, onSuccess }: EditBookProps) {
   });
 
   const submit = (updatedBook: RequestLivroType) => {
-    updateBook(book.id, updatedBook);
-    if (onSuccess) onSuccess();
+    updateBook(book.id, updatedBook).then(() => {
+      queryClient.invalidateQueries({ queryKey: ["books"] });
+      if (onSuccess) onSuccess();
+    });
   };
 
   return (
