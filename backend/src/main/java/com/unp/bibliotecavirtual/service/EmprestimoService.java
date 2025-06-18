@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
 
+import static com.unp.bibliotecavirtual.model.enums.StatusEmprestimo.*;
 import static com.unp.bibliotecavirtual.model.enums.StatusEmprestimo.ATRASADO;
 import static com.unp.bibliotecavirtual.model.enums.StatusEmprestimo.DEVOLVIDO;
 import static com.unp.bibliotecavirtual.service.CalcularPrazoEmprestimo.calcularPrazo;
@@ -58,13 +59,16 @@ public class EmprestimoService {
     }
 
     public List<Emprestimo> listarTodos() {
-        return emprestimoRepository.findAll();
+        List<Emprestimo> emprestimos = emprestimoRepository.findAll();
+        emprestimos.forEach(this::atualizarStatusEMultaSeAtrasado);
+        return emprestimos;
     }
 
     public List<Emprestimo> buscarEmprestimosPorCliente(Long idCliente) throws ClienteNaoEncontrado {
         Cliente cliente = clienteRepository.findById(idCliente).orElseThrow(ClienteNaoEncontrado::new);
-
-        return emprestimoRepository.findByCliente(cliente);
+        List<Emprestimo> emprestimos = emprestimoRepository.findByCliente(cliente);
+        emprestimos.forEach(this::atualizarStatusEMultaSeAtrasado);
+        return emprestimos;
     }
 
     public void deletarEmprestimo(Long id) throws EmprestimoNotFoundException {
@@ -103,5 +107,23 @@ public class EmprestimoService {
         emprestimoRepository.save(emprestimo);
 
         return emprestimo;
+    }
+
+    /**
+     * Atualiza o status e a multa do empréstimo caso esteja atrasado.
+     */
+    private void atualizarStatusEMultaSeAtrasado(Emprestimo emprestimo) {
+        if (emprestimo.getStatus() == null || emprestimo.getStatus().equals(DEVOLVIDO)) {
+            return;
+        }
+        LocalDate hoje = LocalDate.now();
+        LocalDate prazo = emprestimo.getPrazoDevolucao();
+        if (prazo != null && hoje.isAfter(prazo)) {
+            long diasAtraso = DAYS.between(prazo, hoje);
+            double multa = diasAtraso * 2.0;
+            emprestimo.setMulta(new Multa(multa));
+            emprestimo.setStatus(ATRASADO);
+            emprestimoRepository.save(emprestimo);
+        }
     }
 }
