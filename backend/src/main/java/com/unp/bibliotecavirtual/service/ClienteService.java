@@ -1,6 +1,7 @@
 package com.unp.bibliotecavirtual.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.unp.bibliotecavirtual.exceptions.ClienteExistenteException;
 import com.unp.bibliotecavirtual.exceptions.ClienteNaoEncontrado;
@@ -22,6 +23,15 @@ public class ClienteService {
      * [] Lançar exceção caso cliente exista
      */
     public Cliente cadastrar(Cliente cliente) throws ClienteExistenteException {
+        Optional<Cliente> clienteExistente = clienteRepository.findByCpfAndIsDeleted(cliente.getCpf(), true);
+        if (clienteExistente.isPresent()) {
+            Cliente reativado = clienteExistente.get();
+            reativado.setNome(cliente.getNome());
+            reativado.setEmail(cliente.getEmail());
+            reativado.setSenha(cliente.getSenha());
+            reativado.setIsDeleted(false);
+            return clienteRepository.save(reativado);
+        }
         if (clienteRepository.existsByCpf(cliente.getCpf())) throw new ClienteExistenteException();
         return clienteRepository.save(cliente);
     }

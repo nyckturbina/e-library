@@ -3,6 +3,7 @@ package com.unp.bibliotecavirtual.model;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 
 @Getter
 @NoArgsConstructor
@@ -10,9 +11,8 @@ import org.hibernate.annotations.SQLDelete;
 @ToString
 @EqualsAndHashCode
 @Entity
-// Não sei como aplicar softdelete, apliquem e testem ~Caio
-//@Table(name = "clientes")
-//@SQLDelete(sql = "UPDATE clientes SET deleted = true WHERE id = ?")
+@SQLDelete(sql = "UPDATE cliente SET is_deleted = true WHERE id = ?")
+@SQLRestriction(value = "is_deleted = false")
 public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,7 +39,11 @@ public class Cliente {
     private String senha;
 
     @Column(nullable = false)
-    private boolean deleted = false;
+    private Boolean isDeleted = false;
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
+    }
 
     public void avaliarLivro(Livro livro, Integer like) {
         // lógica de avaliação

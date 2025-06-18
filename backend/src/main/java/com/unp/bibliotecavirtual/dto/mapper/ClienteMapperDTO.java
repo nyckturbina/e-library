@@ -22,7 +22,7 @@ public class ClienteMapperDTO {
                 cliente.getCpf(),
                 cliente.getEmail(),
                 cliente.getSenha(),
-                cliente.isDeleted()
+                cliente.getIsDeleted()
         );
     }
 
@@ -31,7 +31,7 @@ public class ClienteMapperDTO {
                 cliente.getId(),
                 cliente.getNome(),
                 cliente.getCpf(),
-                cliente.isDeleted()
+                cliente.getIsDeleted()
         );
     }
 }

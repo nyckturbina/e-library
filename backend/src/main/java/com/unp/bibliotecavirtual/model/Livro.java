@@ -2,6 +2,8 @@ package com.unp.bibliotecavirtual.model;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 
@@ -10,6 +12,8 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @Entity
 @ToString
 @EqualsAndHashCode
+@SQLDelete(sql = "UPDATE livro SET is_deleted = true WHERE id = ?")
+@SQLRestriction(value = "is_deleted = false")
 public class Livro {
     @Id
     @GeneratedValue(strategy = IDENTITY)
@@ -44,6 +48,9 @@ public class Livro {
     @Setter
     private Integer totalAvaliacoes = 0;
 
+    @Column(nullable = false)
+    private Boolean isDeleted = false;
+
     public Livro(String titulo, String autor, String genero, String isbn) {
         this.titulo = titulo;
         this.autor = autor;
@@ -74,6 +81,10 @@ public class Livro {
     public Livro(String titulo, String autor, String genero, String isbn, String sinopse, Integer exemplaresDisponiveisEmEstoque, Integer numeroPaginas, Long avaliacao, Integer totalAvaliacoes) {
         this(titulo, autor, genero, isbn, sinopse, exemplaresDisponiveisEmEstoque, numeroPaginas, avaliacao);
         this.totalAvaliacoes = totalAvaliacoes;
+    }
+
+    public void setIsDeleted(Boolean isDeleted) {
+        this.isDeleted = isDeleted;
     }
 
 //    public static void setId(long id) {

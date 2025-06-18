@@ -21,8 +21,20 @@ public class LivroService {
     private LivroRepository livroRepository;
 
     public Livro cadastrar(Livro livro) {
-        // Verificar se livro já existe
-
+        Optional<Livro> livroExistente = livroRepository.findByIsbnAndIsDeleted(livro.getIsbn(), true);
+        if (livroExistente.isPresent()) {
+            Livro reativado = livroExistente.get();
+            reativado.setTitulo(livro.getTitulo());
+            reativado.setAutor(livro.getAutor());
+            reativado.setGenero(livro.getGenero());
+            reativado.setSinopse(livro.getSinopse());
+            reativado.setExemplaresDisponiveisEmEstoque(livro.getExemplaresDisponiveisEmEstoque());
+            reativado.setNumeroPaginas(livro.getNumeroPaginas());
+            reativado.setAvaliacao(livro.getAvaliacao());
+            reativado.setTotalAvaliacoes(livro.getTotalAvaliacoes());
+            reativado.setIsDeleted(false);
+            return livroRepository.save(reativado);
+        }
         return livroRepository.save(livro);
     }
 
